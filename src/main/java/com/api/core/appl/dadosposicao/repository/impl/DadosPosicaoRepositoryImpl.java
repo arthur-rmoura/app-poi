@@ -15,11 +15,11 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 		return this.findAll(pageable);
 	}
 
-	@Override
+	/*@Override
 	public Page<DadosPosicao> listaDadosPosicionamento(Filtro filtro) {
 		Pageable page = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
 		return this.findAll(page);
-	}
+	}*/
 
 	
 }

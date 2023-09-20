@@ -11,6 +11,6 @@ public interface DadosPosicaoRepository extends Repository<DadosPosicao, Long> {
 	
     Page<DadosPosicao> findAll(Pageable pageable);
 
-	Page<DadosPosicao> listaDadosPosicionamento(Filtro filtro);
+	//Page<DadosPosicao> listaDadosPosicionamento(Filtro filtro);
 
 }
