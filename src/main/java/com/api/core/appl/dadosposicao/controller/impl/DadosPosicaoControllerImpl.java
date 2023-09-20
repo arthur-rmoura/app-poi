@@ -1,4 +1,4 @@
-package com.api.core.appl.dadosposicao.controller;
+package com.api.core.appl.dadosposicao.controller.impl;
 
 import java.util.ArrayList;
 
@@ -7,18 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.core.appl.dadosposicao.DadosPosicaoDTO;
-import com.api.core.appl.dadosposicao.service.DadosPosicaoService;
+import com.api.core.appl.dadosposicao.controller.spec.DadosPosicaoController;
+import com.api.core.appl.dadosposicao.service.spec.DadosPosicaoService;
 import com.api.core.appl.util.Filtro;
 
 import javax.ws.rs.QueryParam;
 
 @RestController
-public class DadosPosicaoController {
+public class DadosPosicaoControllerImpl implements DadosPosicaoController {
 
 	@Autowired
 	DadosPosicaoService dadosPosicaoService;
 	
 	@GetMapping("/dados-posicao")
+	@Override
     public ArrayList<DadosPosicaoDTO> listaDadosPosicionamento(
     		@QueryParam(value = "placa")String placa, 
     		@QueryParam(value = "dataPosicao")String dataPosicao
