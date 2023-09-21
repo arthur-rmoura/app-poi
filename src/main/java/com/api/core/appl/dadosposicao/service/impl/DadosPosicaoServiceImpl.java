@@ -1,6 +1,7 @@
 package com.api.core.appl.dadosposicao.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,7 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService{
 	public ArrayList<DadosPosicaoDTO> listaDadosPosicionamento(Filtro filtro) {
 		
 		Page<DadosPosicao> paginaDadosPosicao = dadosPosicaoRepository.listaDadosPosicionamento(filtro);
-		ArrayList<DadosPosicao> listaDadosPosicao = (ArrayList<DadosPosicao>) paginaDadosPosicao.getContent();
+		List<DadosPosicao> listaDadosPosicao = paginaDadosPosicao.getContent();
 		DadosPosicaoDTO dadosPosicaoDTO = new DadosPosicaoDTO();
 		dadosPosicaoDTO.setPlaca(listaDadosPosicao.get(0).getPlaca());
 		dadosPosicaoDTO.setDataPosicao(listaDadosPosicao.get(0).getTimestampPosicao() + " Timezone " + listaDadosPosicao.get(0).getTimezonePosicao());
