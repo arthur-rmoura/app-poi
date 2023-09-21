@@ -6,6 +6,6 @@ import com.api.core.appl.dadosposicao.DadosPosicaoDTO;
 
 public interface DadosPosicaoController  {
 	
-	public ArrayList<DadosPosicaoDTO> listaDadosPosicionamento(String placa, String dataPosicao);
+	public ArrayList<DadosPosicaoDTO> listaDadosPosicionamento(Integer numeroPagina, Integer tamanhoPagina, String placa, String dataPosicao);
 
 }

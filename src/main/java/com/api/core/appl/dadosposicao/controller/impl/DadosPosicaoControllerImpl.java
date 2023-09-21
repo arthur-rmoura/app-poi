@@ -22,10 +22,14 @@ public class DadosPosicaoControllerImpl implements DadosPosicaoController {
 	@GetMapping("/dados-posicao")
 	@Override
     public ArrayList<DadosPosicaoDTO> listaDadosPosicionamento(
+    		@QueryParam(value = "numeroPagina")Integer numeroPagina,
+    		@QueryParam(value = "tamanhoPagina")Integer tamanhoPagina,
     		@QueryParam(value = "placa")String placa, 
     		@QueryParam(value = "dataPosicao")String dataPosicao
     ) {
 		Filtro filtro = new Filtro();
+		filtro.setNumeroPagina(numeroPagina == null ? 0 : numeroPagina);
+		filtro.setTamanhoPagina(tamanhoPagina == null ? 10 : tamanhoPagina);
 		filtro.setPlaca(placa);
 		filtro.setData(dataPosicao);
 		

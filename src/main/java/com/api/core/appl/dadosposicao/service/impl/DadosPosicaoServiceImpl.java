@@ -1,11 +1,12 @@
 package com.api.core.appl.dadosposicao.service.impl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.api.core.appl.dadosposicao.DadosPosicao;
 import com.api.core.appl.dadosposicao.DadosPosicaoDTO;
 import com.api.core.appl.dadosposicao.repository.spec.DadosPosicaoRepository;
 import com.api.core.appl.dadosposicao.service.spec.DadosPosicaoService;
@@ -20,10 +21,11 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService{
 	@Override
 	public ArrayList<DadosPosicaoDTO> listaDadosPosicionamento(Filtro filtro) {
 		
-		//dadosPosicaoRepository.listaDadosPosicionamento(filtro);
+		Page<DadosPosicao> paginaDadosPosicao = dadosPosicaoRepository.listaDadosPosicionamento(filtro);
+		ArrayList<DadosPosicao> listaDadosPosicao = (ArrayList<DadosPosicao>) paginaDadosPosicao.getContent();
 		DadosPosicaoDTO dadosPosicaoDTO = new DadosPosicaoDTO();
-		dadosPosicaoDTO.setPlaca("FRG1010");
-		dadosPosicaoDTO.setDataPosicao(LocalDate.now().toString());
+		dadosPosicaoDTO.setPlaca(listaDadosPosicao.get(0).getPlaca());
+		dadosPosicaoDTO.setDataPosicao(listaDadosPosicao.get(0).getTimestampPosicao() + " Timezone " + listaDadosPosicao.get(0).getTimezonePosicao());
 		
 		ArrayList<DadosPosicaoDTO> listaDadosPosicaoDTO = new ArrayList<>();
 		listaDadosPosicaoDTO.add(dadosPosicaoDTO);
