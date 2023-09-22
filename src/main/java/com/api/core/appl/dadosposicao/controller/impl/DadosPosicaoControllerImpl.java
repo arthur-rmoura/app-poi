@@ -3,6 +3,8 @@ package com.api.core.appl.dadosposicao.controller.impl;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import com.api.core.appl.util.Filtro;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -45,11 +48,11 @@ public class DadosPosicaoControllerImpl implements DadosPosicaoController {
 	@GetMapping("/dados-posicao")
 	@ResponseBody
 	@Override
-    public ArrayList<DadosPosicaoDTO> listarDadosPosicionamento(
-    		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0")Integer numeroPagina,
-    		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10")Integer tamanhoPagina,
-    		@RequestParam(name = "placa", required = false)String placa, 
-    		@RequestParam(name = "dataPosicao", required = false)String dataPosicao
+    public ResponseEntity<ArrayList<DadosPosicaoDTO>> listarDadosPosicionamento(
+    		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0") @Parameter(name = "numeroPagina", description = "Número da página", example = "1") Integer numeroPagina,
+    		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "1") Integer tamanhoPagina,
+    		@RequestParam(name = "placa", required = false) @Parameter(name = "placa", description = "Placa do veículo", example = "TST0101") String placa, 
+    		@RequestParam(name = "dataPosicao", required = false) @Parameter(name = "dataPosicao", description = "Data do dados de posição posição", example = "2023-01-01") String dataPosicao
     ) {
 		Filtro filtro = new Filtro();
 		filtro.setNumeroPagina(numeroPagina);
@@ -59,7 +62,7 @@ public class DadosPosicaoControllerImpl implements DadosPosicaoController {
 		
 		ArrayList<DadosPosicaoDTO> listaDadosPosicaoDTO = dadosPosicaoService.listarDadosPosicionamento(filtro);
 		
-        return listaDadosPosicaoDTO;
+        return new ResponseEntity<ArrayList<DadosPosicaoDTO>>(listaDadosPosicaoDTO, HttpStatus.OK);
     }
 	
 	
@@ -68,7 +71,7 @@ public class DadosPosicaoControllerImpl implements DadosPosicaoController {
 			description = "Insere novos dados de posição"
 		)
 		@ApiResponses(value = {
-		        @ApiResponse(responseCode = "200", description = "Dados inseridos com sucesso.", content = {@Content(
+		        @ApiResponse(responseCode = "201", description = "Dados inseridos com sucesso.", content = {@Content(
 	                    mediaType = "application/json",
 	                    schema = @Schema(implementation = DadosPosicaoDTO.class))}), 
 		        @ApiResponse(responseCode = "500", description = "Erro Interno do Servidor", content = @Content)
@@ -76,9 +79,17 @@ public class DadosPosicaoControllerImpl implements DadosPosicaoController {
 		@PostMapping("/dados-posicao")
 		@ResponseBody
 		@Override
-	    public DadosPosicaoDTO inserirDadosPosicionamento(@io.swagger.v3.oas.annotations.parameters.RequestBody  @RequestBody DadosPosicaoDTO dadosPosicaoDTO) {
+	    public ResponseEntity<DadosPosicaoDTO> inserirDadosPosicionamento(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+	    		required = true,
+	    		description = "Payload da requisição contendo o conteúdo json do novo dado de posicionamento a ser inserido",
+	    		content = {@Content(
+	                    mediaType = "application/json",
+	                    schema = @Schema(implementation = DadosPosicaoDTO.class))}
+	    		)  
+	    		@RequestBody DadosPosicaoDTO dadosPosicaoDTO) {
 			
-			return dadosPosicaoService.inserirDadosPosicionamento(dadosPosicaoDTO);
+			dadosPosicaoDTO = dadosPosicaoService.inserirDadosPosicionamento(dadosPosicaoDTO);
+			return new ResponseEntity<DadosPosicaoDTO>(dadosPosicaoDTO, HttpStatus.CREATED);
 			
 	    }
 }
