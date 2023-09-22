@@ -1,9 +1,14 @@
 package com.api.core.appl.dadosposicao.service.impl;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,13 +31,28 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 
 		Page<DadosPosicao> paginaDadosPosicao = dadosPosicaoRepository.listarDadosPosicionamento(filtro);
 		List<DadosPosicao> listaDadosPosicao = paginaDadosPosicao.getContent();
-		DadosPosicaoDTO dadosPosicaoDTO = new DadosPosicaoDTO();
-		dadosPosicaoDTO.setPlaca(listaDadosPosicao.get(0).getPlaca());
-		dadosPosicaoDTO.setDataPosicao(listaDadosPosicao.get(0).getTimestampPosicao() + " Timezone "
-				+ listaDadosPosicao.get(0).getTimezonePosicao());
+		
 
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+			    .parseCaseInsensitive()
+			    .appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)")
+			    .toFormatter(Locale.ENGLISH);
+		
 		ArrayList<DadosPosicaoDTO> listaDadosPosicaoDTO = new ArrayList<>();
-		listaDadosPosicaoDTO.add(dadosPosicaoDTO);
+		Instant instant = Instant.now();
+		
+		for(DadosPosicao dadosPosicao : listaDadosPosicao) {	
+			DadosPosicaoDTO dadosPosicaoDTO = new DadosPosicaoDTO();
+			dadosPosicaoDTO.setPlaca(dadosPosicao.getPlaca());
+			LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(dadosPosicao.getEpochSecondPosicao().longValue(), 0, ZoneId.of(dadosPosicao.getTimezonePosicao()).getRules().getOffset(instant));
+			ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.of(dadosPosicao.getTimezonePosicao()));
+			dadosPosicaoDTO.setDataPosicao(zonedDateTime.format(formatter));
+			dadosPosicaoDTO.setVelocidade(dadosPosicao.getVelocidade());
+			dadosPosicaoDTO.setLongitude(dadosPosicao.getLongitude());
+			dadosPosicaoDTO.setLatitude(dadosPosicao.getLatitude());
+			dadosPosicaoDTO.setIgnicao(dadosPosicao.getIgnicao());
+			listaDadosPosicaoDTO.add(dadosPosicaoDTO);
+		}
 
 		return listaDadosPosicaoDTO;
 
@@ -41,11 +61,13 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 	@Override
 	public DadosPosicaoDTO inserirDadosPosicionamento(DadosPosicaoDTO dadosPosicaoDTO) {
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		LocalDate localDate = LocalDate.parse(dadosPosicaoDTO.getDataPosicao(), formatter);
-		
-		Long timestampPosicao = 1000L; // extrair da localDate
-		Integer timezonePosicao = -3; // extrair da localDate
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+			    .parseCaseInsensitive()
+			    .appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)")
+			    .toFormatter(Locale.ENGLISH);
+		ZonedDateTime zonedDateTime = ZonedDateTime.parse(dadosPosicaoDTO.getDataPosicao().replace("(Hora oficial do Brasil)", "(Brasilia Time)"), formatter);
+		long timestampPosicao = zonedDateTime.toEpochSecond();
+		String timezonePosicao = zonedDateTime.getZone().getId();
 
 		DadosPosicao dadosPosicao = new DadosPosicao(dadosPosicaoDTO.getPlaca(), timestampPosicao, timezonePosicao,
 				dadosPosicaoDTO.getVelocidade(), dadosPosicaoDTO.getLongitude(), dadosPosicaoDTO.getLatitude(),

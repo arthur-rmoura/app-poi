@@ -21,10 +21,10 @@ public class DadosPosicao implements Serializable {
 	private String placa;
 
 	@Column(nullable = false)
-	private Long timestampPosicao;
+	private Long epochSecondPosicao;
 
 	@Column(nullable = false)
-	private Integer timezonePosicao;
+	private String timezonePosicao;
 
 	@Column(nullable = false)
 	private Float velocidade;
@@ -43,11 +43,11 @@ public class DadosPosicao implements Serializable {
 		// this one is protected since it should not be used directly
 	}
 
-	public DadosPosicao(String placa, Long timestampPosicao, Integer timezonePosicao, Float velocidade,
+	public DadosPosicao(String placa, Long epochSecondPosicao, String timezonePosicao, Float velocidade,
 			Double longitude, Double latitude, Boolean ignicao) {
 		super();
 		this.placa = placa;
-		this.timestampPosicao = timestampPosicao;
+		this.epochSecondPosicao = epochSecondPosicao;
 		this.timezonePosicao = timezonePosicao;
 		this.velocidade = velocidade;
 		this.longitude = longitude;
@@ -71,19 +71,11 @@ public class DadosPosicao implements Serializable {
 		this.placa = placa;
 	}
 
-	public Long getTimestampPosicao() {
-		return timestampPosicao;
-	}
-
-	public void setTimestampPosicao(Long timestampPosicao) {
-		this.timestampPosicao = timestampPosicao;
-	}
-
-	public Integer getTimezonePosicao() {
+	public String getTimezonePosicao() {
 		return timezonePosicao;
 	}
 
-	public void setTimezonePosicao(Integer timezonePosicao) {
+	public void setTimezonePosicao(String timezonePosicao) {
 		this.timezonePosicao = timezonePosicao;
 	}
 
@@ -117,6 +109,14 @@ public class DadosPosicao implements Serializable {
 
 	public void setIgnicao(Boolean ignicao) {
 		this.ignicao = ignicao;
+	}
+
+	public Long getEpochSecondPosicao() {
+		return epochSecondPosicao;
+	}
+
+	public void setEpochSecondPosicao(Long epochSecondPosicao) {
+		this.epochSecondPosicao = epochSecondPosicao;
 	}
 
 }
