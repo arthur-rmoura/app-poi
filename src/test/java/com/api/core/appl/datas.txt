@@ -1,3 +1,4 @@
+Wed Dec 13 2018 00:06:31 GMT-0200 (Hora oficial do Brasil) <---- primeira a dar problema
 Wed Dec 12 2018 00:04:03 GMT-0200 (Hora oficial do Brasil)
 Wed Dec 12 2018 00:34:06 GMT-0200 (Hora oficial do Brasil)
 Wed Dec 12 2018 01:04:09 GMT-0200 (Hora oficial do Brasil)
