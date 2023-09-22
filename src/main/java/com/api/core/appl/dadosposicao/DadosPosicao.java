@@ -43,10 +43,9 @@ public class DadosPosicao implements Serializable {
 		// this one is protected since it should not be used directly
 	}
 
-	public DadosPosicao(Long id, String placa, Long timestampPosicao, Integer timezonePosicao, Float velocidade,
+	public DadosPosicao(String placa, Long timestampPosicao, Integer timezonePosicao, Float velocidade,
 			Double longitude, Double latitude, Boolean ignicao) {
 		super();
-		this.id = id;
 		this.placa = placa;
 		this.timestampPosicao = timestampPosicao;
 		this.timezonePosicao = timezonePosicao;

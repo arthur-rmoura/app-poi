@@ -55,16 +55,15 @@
 		</dependency>
 
 		<!-- Dependências para o swagger -->
-
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.7.0</version>
 		</dependency>
 		<dependency>
-			<groupId>io.swagger</groupId>
+			<groupId>io.swagger.core.v3</groupId>
 			<artifactId>swagger-annotations</artifactId>
-			<version>1.6.11</version>
+			<version>2.2.16</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -75,6 +74,7 @@
 			<artifactId>jackson-databind-nullable</artifactId>
 			<version>0.2.6</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -97,36 +97,6 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin>
-
-			<!-- Plugin para o swagger -->
-			<plugin>
-				<groupId>org.openapitools</groupId>
-				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>5.4.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<inputSpec>
-								${project.basedir}/src/main/resources/openapi.yml
-							</inputSpec>
-							<generatorName>spring</generatorName>
-							<apiPackage>io.tej.SwaggerCodgen.api</apiPackage>
-							<modelPackage>io.tej.SwaggerCodgen.model</modelPackage>
-							<supportingFilesToGenerate>
-								ApiUtil.java
-							</supportingFilesToGenerate>
-							<configOptions>
-								<sourceFolder>src/main/java/</sourceFolder>
-								<delegatePattern>true</delegatePattern>
-								<interfaceOnly>true</interfaceOnly>
-							</configOptions>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

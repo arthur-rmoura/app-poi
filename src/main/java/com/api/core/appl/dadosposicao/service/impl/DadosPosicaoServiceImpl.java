@@ -20,9 +20,9 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService{
 	DadosPosicaoRepository dadosPosicaoRepository;
 	
 	@Override
-	public ArrayList<DadosPosicaoDTO> listaDadosPosicionamento(Filtro filtro) {
+	public ArrayList<DadosPosicaoDTO> listarDadosPosicionamento(Filtro filtro) {
 		
-		Page<DadosPosicao> paginaDadosPosicao = dadosPosicaoRepository.listaDadosPosicionamento(filtro);
+		Page<DadosPosicao> paginaDadosPosicao = dadosPosicaoRepository.listarDadosPosicionamento(filtro);
 		List<DadosPosicao> listaDadosPosicao = paginaDadosPosicao.getContent();
 		DadosPosicaoDTO dadosPosicaoDTO = new DadosPosicaoDTO();
 		dadosPosicaoDTO.setPlaca(listaDadosPosicao.get(0).getPlaca());
@@ -33,6 +33,19 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService{
 		
 		return listaDadosPosicaoDTO;
 		
+	}
+
+	@Override
+	public DadosPosicaoDTO inserirDadosPosicionamento(DadosPosicaoDTO dadosPosicaoDTO) {
+		Long timestampPosicao = 1000L; //converter do DTO
+		Integer timezonePosicao = -3; //converter do DTO 
+		
+		DadosPosicao dadosPosicao = new DadosPosicao(dadosPosicaoDTO.getPlaca(), timestampPosicao, timezonePosicao, 
+				dadosPosicaoDTO.getVelocidade(), dadosPosicaoDTO.getLongitude(), dadosPosicaoDTO.getLatitude(), dadosPosicaoDTO.getIgnicao());
+		
+		dadosPosicaoRepository.inserirDadosPosicionamento(dadosPosicao);
+		
+		return dadosPosicaoDTO;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.api.core.appl.dadosposicao;
 
 import java.io.Serializable;
 
+
 public class DadosPosicaoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;

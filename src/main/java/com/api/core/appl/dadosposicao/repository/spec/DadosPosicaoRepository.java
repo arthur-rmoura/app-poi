@@ -7,5 +7,7 @@ import com.api.core.appl.util.Filtro;
 
 public interface DadosPosicaoRepository {
 
-	Page<DadosPosicao> listaDadosPosicionamento(Filtro filtro);
+	DadosPosicao inserirDadosPosicionamento(DadosPosicao dadosPosicao);
+
+	Page<DadosPosicao> listarDadosPosicionamento(Filtro filtro);
 }

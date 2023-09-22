@@ -7,6 +7,8 @@ import com.api.core.appl.util.Filtro;
 
 public interface DadosPosicaoService {
 
-	ArrayList<DadosPosicaoDTO> listaDadosPosicionamento(Filtro filtro);
+	ArrayList<DadosPosicaoDTO> listarDadosPosicionamento(Filtro filtro);
+
+	DadosPosicaoDTO inserirDadosPosicionamento(DadosPosicaoDTO dadosPosicaoDTO);
 
 }
