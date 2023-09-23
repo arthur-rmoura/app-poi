@@ -40,8 +40,8 @@ public class DadosPosicao implements Serializable {
 	private Boolean ignicao;
 
 	protected DadosPosicao() {
-		// no-args constructor required by JPA spec
-		// this one is protected since it should not be used directly
+		// Construtor sem argumentos, requerido pela JPA
+		// Definido como protegido já que não deve ser usado diretamente
 	}
 
 	public DadosPosicao(String placa, Long epochSecondPosicao, String timezonePosicao, Float velocidade,
