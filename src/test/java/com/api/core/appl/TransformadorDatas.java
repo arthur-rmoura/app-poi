@@ -37,16 +37,18 @@ class TransformadorDatas {
 					.appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)").toFormatter(Locale.ENGLISH);
 
 	
-
+			int i = 1;
 			for (String dataHoraZona : listaDataHoraZona) {
-				System.out.println(dataHoraZona);
+				//System.out.println(dataHoraZona);
 				ZonedDateTime zonedDateTime = ZonedDateTime
 						.parse(dataHoraZona.replace("(Hora oficial do Brasil)", "(Brasilia Time)"), formatter);
-				long timestampPosicao = zonedDateTime.toEpochSecond();
+				long epochSecondPosicao = zonedDateTime.toEpochSecond();
 				String timezonePosicao = zonedDateTime.getZone().getId();
-
-				System.out.println(timestampPosicao);
-				System.out.println(timezonePosicao);
+				//if(i > 470+252+206 && i <= 470+252+206) {
+				if(i > 722 && i <= 722+206) {
+					System.out.println(epochSecondPosicao + "," + "\"" + timezonePosicao + "\"");
+				}
+				i++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.api.core.appl.dadosposicao;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,11 +30,11 @@ public class DadosPosicao implements Serializable {
 	@Column(nullable = false)
 	private Float velocidade;
 
-	@Column(nullable = false)
-	private Double longitude;
+	@Column(nullable = false, precision=12, scale=9)
+	private BigDecimal longitude;
 
-	@Column(nullable = false)
-	private Double latitude;
+	@Column(nullable = false, precision=11, scale=9)
+	private BigDecimal latitude;
 
 	@Column(nullable = false)
 	private Boolean ignicao;
@@ -44,7 +45,7 @@ public class DadosPosicao implements Serializable {
 	}
 
 	public DadosPosicao(String placa, Long epochSecondPosicao, String timezonePosicao, Float velocidade,
-			Double longitude, Double latitude, Boolean ignicao) {
+			BigDecimal longitude, BigDecimal latitude, Boolean ignicao) {
 		super();
 		this.placa = placa;
 		this.epochSecondPosicao = epochSecondPosicao;
@@ -54,6 +55,8 @@ public class DadosPosicao implements Serializable {
 		this.latitude = latitude;
 		this.ignicao = ignicao;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -87,19 +90,19 @@ public class DadosPosicao implements Serializable {
 		this.velocidade = velocidade;
 	}
 
-	public Double getLongitude() {
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 
-	public Double getLatitude() {
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
