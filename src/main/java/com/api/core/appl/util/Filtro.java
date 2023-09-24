@@ -1,10 +1,13 @@
 package com.api.core.appl.util;
 
+import java.math.BigDecimal;
+
 public class Filtro {
 	
 	private String placa;
 	private String data;
 	private String nome;
+	private BigDecimal raioPoi;
 	private Integer numeroPagina;
 	private Integer tamanhoPagina;
 	
@@ -37,5 +40,11 @@ public class Filtro {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public BigDecimal getRaioPoi() {
+		return raioPoi;
+	}
+	public void setRaioPoi(BigDecimal raioPoi) {
+		this.raioPoi = raioPoi;
 	}
 }

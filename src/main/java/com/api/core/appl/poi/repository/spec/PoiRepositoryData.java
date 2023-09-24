@@ -4,10 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.api.core.appl.dadosposicao.DadosPosicao;
+import com.api.core.appl.poi.Poi;
 
-public interface PoiRepositoryData extends PagingAndSortingRepository<DadosPosicao, Long> {
+
+public interface PoiRepositoryData extends PagingAndSortingRepository<Poi, Long> {
 	
-	Page<DadosPosicao> findAll(Pageable pageable);
+	Page<Poi> findAll(Pageable pageable);
 	
 }

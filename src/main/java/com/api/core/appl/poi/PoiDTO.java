@@ -16,7 +16,7 @@ public class PoiDTO implements Serializable {
 	private BigDecimal longitude;
 
 	protected PoiDTO() {
-
+		// Definido como protegido já que não deve ser usado diretamente
 	}
 
 	public PoiDTO(String nome, BigDecimal raio, BigDecimal latitude, BigDecimal longitude) {

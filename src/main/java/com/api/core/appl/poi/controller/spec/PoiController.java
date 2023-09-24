@@ -1,16 +1,17 @@
 package com.api.core.appl.poi.controller.spec;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.springframework.http.ResponseEntity;
 
-import com.api.core.appl.dadosposicao.DadosPosicaoDTO;
+import com.api.core.appl.poi.PoiDTO;
 
 public interface PoiController  {
 	
 
-	ResponseEntity<ArrayList<DadosPosicaoDTO>> listarDadosPosicionamento(Integer numeroPagina, Integer tamanhoPagina, String placa, String dataPosicao);
+	ResponseEntity<ArrayList<PoiDTO>> listarPoi(Integer numeroPagina, Integer tamanhoPagina, String nomePoi, BigDecimal raioPoi);
 
-	ResponseEntity<DadosPosicaoDTO> inserirDadosPosicionamento(DadosPosicaoDTO dadosPosicaoDTO);
+	ResponseEntity<PoiDTO> inserirPoi(PoiDTO poiDTO);
 
 }

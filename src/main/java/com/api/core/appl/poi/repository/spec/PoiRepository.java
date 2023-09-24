@@ -2,12 +2,12 @@ package com.api.core.appl.poi.repository.spec;
 
 import org.springframework.data.domain.Page;
 
-import com.api.core.appl.dadosposicao.DadosPosicao;
+import com.api.core.appl.poi.Poi;
 import com.api.core.appl.util.Filtro;
 
 public interface PoiRepository {
 
-	DadosPosicao inserirDadosPosicionamento(DadosPosicao dadosPosicao);
+	Poi inserirPoi(Poi poi);
 
-	Page<DadosPosicao> listarDadosPosicionamento(Filtro filtro);
+	Page<Poi> listarPoi(Filtro filtro);
 }

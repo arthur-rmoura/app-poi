@@ -22,14 +22,14 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 
 
 	@Override
-	public Page<DadosPosicao> listarDadosPosicionamento(Filtro filtro) {
+	public Page<DadosPosicao> listarDadosPosicao(Filtro filtro) {
 		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
 		return dadosPosicaoRepositoryData.findAll(pageable);
 	}
 
 
 	@Override
-	public DadosPosicao inserirDadosPosicionamento(DadosPosicao dadosPosicao) {
+	public DadosPosicao inserirDadosPosicao(DadosPosicao dadosPosicao) {
 		return dadosPosicaoRepositoryData.save(dadosPosicao);
 	}
 
