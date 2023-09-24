@@ -7,7 +7,7 @@ public class Filtro {
 	private String placa;
 	private String data;
 	private String nome;
-	private BigDecimal raioPoi;
+	private BigDecimal raio;
 	private Integer numeroPagina;
 	private Integer tamanhoPagina;
 	
@@ -41,10 +41,11 @@ public class Filtro {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public BigDecimal getRaioPoi() {
-		return raioPoi;
+	public BigDecimal getRaio() {
+		return raio;
 	}
-	public void setRaioPoi(BigDecimal raioPoi) {
-		this.raioPoi = raioPoi;
+	public void setRaio(BigDecimal raio) {
+		this.raio = raio;
 	}
+	
 }

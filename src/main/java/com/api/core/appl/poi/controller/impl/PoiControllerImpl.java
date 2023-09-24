@@ -52,14 +52,14 @@ public class PoiControllerImpl implements PoiController {
     public ResponseEntity<ArrayList<PoiDTO>> listarPoi(
     		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0") @Parameter(name = "numeroPagina", description = "Número da página", example = "1") Integer numeroPagina,
     		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "1") Integer tamanhoPagina,
-    		@RequestParam(name = "nomePoi", required = false) @Parameter(name = "nome", description = "Nome do POI", example = "Ponto 1") String nomePoi, 
-    		@RequestParam(name = "raio", required = false) @Parameter(name = "raio", description = "Tamanho do raio do POI em metros", example = "500") BigDecimal raioPoi
+    		@RequestParam(name = "nome", required = false) @Parameter(name = "nome", description = "Nome do POI", example = "Ponto 1") String nome, 
+    		@RequestParam(name = "raio", required = false) @Parameter(name = "raio", description = "Tamanho do raio do POI em metros", example = "500.0") BigDecimal raio
     ) {
 		Filtro filtro = new Filtro();
 		filtro.setNumeroPagina(numeroPagina);
 		filtro.setTamanhoPagina(tamanhoPagina);
-		filtro.setNome(nomePoi);
-		filtro.setRaioPoi(raioPoi);
+		filtro.setNome(nome);
+		filtro.setRaio(raio);
 		
 		ArrayList<PoiDTO> listaPoiDTO = poiService.listarPoi(filtro);
 		

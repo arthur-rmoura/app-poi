@@ -9,5 +9,10 @@ import com.api.core.appl.dadosposicao.DadosPosicao;
 public interface DadosPosicaoRepositoryData extends PagingAndSortingRepository<DadosPosicao, Long> {
 	
 	Page<DadosPosicao> findAll(Pageable pageable);
+
+	Page<DadosPosicao> findByEpochSecondPosicaoAndTimezonePosicao(long timestampPosicao, String timezonePosicao,
+			Pageable pageable);
+
+	Page<DadosPosicao> findByPlaca(String placa, Pageable pageable);
 	
 }

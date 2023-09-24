@@ -10,4 +10,8 @@ public interface PoiRepository {
 	Poi inserirPoi(Poi poi);
 
 	Page<Poi> listarPoi(Filtro filtro);
+
+	Page<Poi> listarPoiPorNome(Filtro filtro);
+
+	Page<Poi> listarPoiPorRaio(Filtro filtro);
 }

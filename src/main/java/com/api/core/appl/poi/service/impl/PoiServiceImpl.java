@@ -21,8 +21,20 @@ public class PoiServiceImpl implements PoiService {
 
 	@Override
 	public ArrayList<PoiDTO> listarPoi(Filtro filtro) {
-
-		Page<Poi> paginaPoi = poiRepository.listarPoi(filtro);
+		
+		Page<Poi> paginaPoi;
+		
+		if(filtro.getNome() != null) {
+			paginaPoi = poiRepository.listarPoiPorNome(filtro);
+		}
+		
+		else if(filtro.getRaio() != null) {
+			paginaPoi = poiRepository.listarPoiPorRaio(filtro);
+		}
+		else {
+			paginaPoi = poiRepository.listarPoi(filtro);
+		}
+		
 		List<Poi> listaPoi = paginaPoi.getContent();
 		
 		ArrayList<PoiDTO> listaPoiDTO = new ArrayList<>();

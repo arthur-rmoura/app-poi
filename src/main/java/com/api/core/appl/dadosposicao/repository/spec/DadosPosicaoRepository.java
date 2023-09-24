@@ -10,4 +10,8 @@ public interface DadosPosicaoRepository {
 	DadosPosicao inserirDadosPosicao(DadosPosicao dadosPosicao);
 
 	Page<DadosPosicao> listarDadosPosicao(Filtro filtro);
+
+	Page<DadosPosicao> listarDadosPosicaoPorData(Filtro filtro);
+
+	Page<DadosPosicao> listarDadosPosicaoPorPlaca(Filtro filtro);
 }

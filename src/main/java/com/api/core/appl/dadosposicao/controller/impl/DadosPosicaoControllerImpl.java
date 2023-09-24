@@ -52,7 +52,7 @@ public class DadosPosicaoControllerImpl implements DadosPosicaoController {
     		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0") @Parameter(name = "numeroPagina", description = "Número da página", example = "1") Integer numeroPagina,
     		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "1") Integer tamanhoPagina,
     		@RequestParam(name = "placa", required = false) @Parameter(name = "placa", description = "Placa do veículo", example = "TST0101") String placa, 
-    		@RequestParam(name = "dataPosicao", required = false) @Parameter(name = "dataPosicao", description = "Data do dados de posição posição", example = "2023-01-01") String dataPosicao
+    		@RequestParam(name = "dataPosicao", required = false) @Parameter(name = "dataPosicao", description = "Data do dados de posição posição", example = "2023-01-01 12:00:00") String dataPosicao
     ) {
 		Filtro filtro = new Filtro();
 		filtro.setNumeroPagina(numeroPagina);

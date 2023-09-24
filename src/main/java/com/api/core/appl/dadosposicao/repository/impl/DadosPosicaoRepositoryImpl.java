@@ -1,5 +1,10 @@
 package com.api.core.appl.dadosposicao.repository.impl;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Locale;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +36,29 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 	@Override
 	public DadosPosicao inserirDadosPosicao(DadosPosicao dadosPosicao) {
 		return dadosPosicaoRepositoryData.save(dadosPosicao);
+	}
+
+
+	@Override
+	public Page<DadosPosicao> listarDadosPosicaoPorData(Filtro filtro) {
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+			    .parseCaseInsensitive()
+			    .appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)")
+			    .toFormatter(Locale.ENGLISH);
+		ZonedDateTime zonedDateTime = ZonedDateTime.parse(filtro.getData().replace("(Hora oficial do Brasil)", "(Brasilia Time)"), formatter);
+		long timestampPosicao = zonedDateTime.toEpochSecond();
+		String timezonePosicao = zonedDateTime.getZone().getId();
+		
+		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
+		return dadosPosicaoRepositoryData.findByEpochSecondPosicaoAndTimezonePosicao(timestampPosicao, timezonePosicao, pageable);
+	}
+
+
+	@Override
+	public Page<DadosPosicao> listarDadosPosicaoPorPlaca(Filtro filtro) {
+		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
+		return dadosPosicaoRepositoryData.findByPlaca(filtro.getPlaca(), pageable);
+
 	}
 
 }

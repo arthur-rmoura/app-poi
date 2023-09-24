@@ -29,7 +29,18 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 	@Override
 	public ArrayList<DadosPosicaoDTO> listarDadosPosicao(Filtro filtro) {
 
-		Page<DadosPosicao> paginaDadosPosicao = dadosPosicaoRepository.listarDadosPosicao(filtro);
+		Page<DadosPosicao> paginaDadosPosicao;
+		
+		if(filtro.getPlaca() != null) {
+			paginaDadosPosicao = dadosPosicaoRepository.listarDadosPosicaoPorPlaca(filtro);
+		}
+		else if (filtro.getData() != null) {
+			paginaDadosPosicao = dadosPosicaoRepository.listarDadosPosicaoPorData(filtro);
+		}
+		else {
+			paginaDadosPosicao = dadosPosicaoRepository.listarDadosPosicao(filtro);
+		}
+		
 		List<DadosPosicao> listaDadosPosicao = paginaDadosPosicao.getContent();
 		
 
