@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 public class Filtro {
 	
 	private String placa;
+	private String marca;
+	private String modelo;
 	private String data;
 	private String nome;
 	private BigDecimal raio;
@@ -47,5 +49,16 @@ public class Filtro {
 	public void setRaio(BigDecimal raio) {
 		this.raio = raio;
 	}
-	
+	public String getMarca() {
+		return marca;
+	}
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+	public String getModelo() {
+		return modelo;
+	}
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
 }

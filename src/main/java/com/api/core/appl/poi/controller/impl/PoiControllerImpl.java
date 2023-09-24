@@ -37,7 +37,7 @@ public class PoiControllerImpl implements PoiController {
 	
 	@Operation(	
 		summary = "Recupera POIs", 
-		description = "Recupera POIs paginados e filtrados por placa e data"
+		description = "Recupera POIs paginados e filtrados por nome e raio"
 	)
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "200", description = "Dados recuperados com sucesso.", content = {@Content(
@@ -51,7 +51,7 @@ public class PoiControllerImpl implements PoiController {
 	@Override
     public ResponseEntity<ArrayList<PoiDTO>> listarPoi(
     		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0") @Parameter(name = "numeroPagina", description = "Número da página", example = "1") Integer numeroPagina,
-    		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "1") Integer tamanhoPagina,
+    		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "10") Integer tamanhoPagina,
     		@RequestParam(name = "nome", required = false) @Parameter(name = "nome", description = "Nome do POI", example = "Ponto 1") String nome, 
     		@RequestParam(name = "raio", required = false) @Parameter(name = "raio", description = "Tamanho do raio do POI em metros", example = "500.0") BigDecimal raio
     ) {
@@ -82,7 +82,7 @@ public class PoiControllerImpl implements PoiController {
 		@Override
 	    public ResponseEntity<PoiDTO> inserirPoi(@io.swagger.v3.oas.annotations.parameters.RequestBody(
 	    		required = true,
-	    		description = "Payload da requisição contendo o conteúdo json do novo dado de posicionamento a ser inserido",
+	    		description = "Payload da requisição contendo o conteúdo json do novo POI a ser inserido",
 	    		content = {@Content(
 	                    mediaType = "application/json",
 	                    schema = @Schema(implementation = PoiDTO.class))}

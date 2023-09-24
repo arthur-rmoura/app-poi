@@ -27,8 +27,6 @@ public class Veiculo implements Serializable {
 	private String modelo;
 	
 	@OneToMany(mappedBy="veiculo", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
-	/*@JoinTable ( name =" veiculo_dados_posicao", joinColumns = @JoinColumn (name ="placa"),
-	inverseJoinColumns = @JoinColumn (name ="id"))*/
 	private List<DadosPosicao> dadosPosicao;
 
 	protected Veiculo() {
