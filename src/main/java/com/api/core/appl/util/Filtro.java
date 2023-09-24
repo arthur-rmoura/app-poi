@@ -4,6 +4,7 @@ public class Filtro {
 	
 	private String placa;
 	private String data;
+	private String nome;
 	private Integer numeroPagina;
 	private Integer tamanhoPagina;
 	
@@ -30,5 +31,11 @@ public class Filtro {
 	}
 	public void setTamanhoPagina(Integer tamanhoPagina) {
 		this.tamanhoPagina = tamanhoPagina;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 }

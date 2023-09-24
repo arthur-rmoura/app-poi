@@ -3,53 +3,44 @@ package com.api.core.appl.poi;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-
 public class PoiDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String placa;
+	private String nome;
 
-	private String dataPosicao;
-
-	private Float velocidade;
-
-	private BigDecimal longitude;
+	private BigDecimal raio;
 
 	private BigDecimal latitude;
 
-	private Boolean ignicao;
+	private BigDecimal longitude;
 
-	public String getPlaca() {
-		return placa;
+	protected PoiDTO() {
+
 	}
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
-
-	public String getDataPosicao() {
-		return dataPosicao;
-	}
-
-	public void setDataPosicao(String dataPosicao) {
-		this.dataPosicao = dataPosicao;
-	}
-
-	public Float getVelocidade() {
-		return velocidade;
-	}
-
-	public void setVelocidade(Float velocidade) {
-		this.velocidade = velocidade;
-	}
-
-	public BigDecimal getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(BigDecimal longitude) {
+	public PoiDTO(String nome, BigDecimal raio, BigDecimal latitude, BigDecimal longitude) {
+		super();
+		this.nome = nome;
+		this.raio = raio;
+		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public BigDecimal getRaio() {
+		return raio;
+	}
+
+	public void setRaio(BigDecimal raio) {
+		this.raio = raio;
 	}
 
 	public BigDecimal getLatitude() {
@@ -60,17 +51,12 @@ public class PoiDTO implements Serializable {
 		this.latitude = latitude;
 	}
 
-	public Boolean getIgnicao() {
-		return ignicao;
+	public BigDecimal getLongitude() {
+		return longitude;
 	}
 
-	public void setIgnicao(Boolean ignicao) {
-		this.ignicao = ignicao;
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
 }

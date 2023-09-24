@@ -19,6 +19,21 @@ public class DadosPosicaoDTO implements Serializable {
 	private BigDecimal latitude;
 
 	private Boolean ignicao;
+	
+	protected DadosPosicaoDTO() {
+	
+	}
+	
+	public DadosPosicaoDTO(String placa, String dataPosicao, Float velocidade, BigDecimal longitude,
+			BigDecimal latitude, Boolean ignicao) {
+		super();
+		this.placa = placa;
+		this.dataPosicao = dataPosicao;
+		this.velocidade = velocidade;
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.ignicao = ignicao;
+	}
 
 	public String getPlaca() {
 		return placa;
@@ -67,10 +82,5 @@ public class DadosPosicaoDTO implements Serializable {
 	public void setIgnicao(Boolean ignicao) {
 		this.ignicao = ignicao;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
 	
 }

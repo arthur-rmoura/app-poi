@@ -41,16 +41,10 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 		ArrayList<DadosPosicaoDTO> listaDadosPosicaoDTO = new ArrayList<>();
 		Instant instant = Instant.now();
 		
-		for(DadosPosicao dadosPosicao : listaDadosPosicao) {	
-			DadosPosicaoDTO dadosPosicaoDTO = new DadosPosicaoDTO();
-			dadosPosicaoDTO.setPlaca(dadosPosicao.getPlaca());
+		for(DadosPosicao dadosPosicao : listaDadosPosicao) {
 			LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(dadosPosicao.getEpochSecondPosicao().longValue(), 0, ZoneId.of(dadosPosicao.getTimezonePosicao()).getRules().getOffset(instant));
 			ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.of(dadosPosicao.getTimezonePosicao()));
-			dadosPosicaoDTO.setDataPosicao(zonedDateTime.format(formatter));
-			dadosPosicaoDTO.setVelocidade(dadosPosicao.getVelocidade());
-			dadosPosicaoDTO.setLongitude(dadosPosicao.getLongitude());
-			dadosPosicaoDTO.setLatitude(dadosPosicao.getLatitude());
-			dadosPosicaoDTO.setIgnicao(dadosPosicao.getIgnicao());
+			DadosPosicaoDTO dadosPosicaoDTO = new DadosPosicaoDTO(dadosPosicao.getPlaca(), zonedDateTime.format(formatter), dadosPosicao.getVelocidade(), dadosPosicao.getLongitude(), dadosPosicao.getLatitude(), dadosPosicao.getIgnicao());
 			listaDadosPosicaoDTO.add(dadosPosicaoDTO);
 		}
 

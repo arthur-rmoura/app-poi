@@ -30,10 +30,10 @@ public class DadosPosicao implements Serializable {
 	@Column(nullable = false)
 	private Float velocidade;
 
-	@Column(nullable = false, precision=12, scale=9)
+	@Column(nullable = false, precision=23, scale=20)
 	private BigDecimal longitude;
 
-	@Column(nullable = false, precision=11, scale=9)
+	@Column(nullable = false, precision=22, scale=20)
 	private BigDecimal latitude;
 
 	@Column(nullable = false)
