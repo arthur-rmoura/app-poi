@@ -23,28 +23,25 @@ public class VeiculoServiceImpl implements VeiculoService {
 
 	@Override
 	public ArrayList<VeiculoDTO> listarVeiculo(Filtro filtro) {
-		
+
 		Page<Veiculo> paginaVeiculo;
-		
-		if(filtro.getPlaca() != null) {
+
+		if (filtro.getPlaca() != null) {
 			paginaVeiculo = veiculoRepository.listarVeiculoPorPlaca(filtro);
 		}
-		
-		else if(filtro.getMarca() != null) {
+		else if (filtro.getMarca() != null) {
 			paginaVeiculo = veiculoRepository.listarVeiculoPorMarca(filtro);
-		}
-		else if(filtro.getModelo() != null) {
+		} else if (filtro.getModelo() != null) {
 			paginaVeiculo = veiculoRepository.listarVeiculoPorModelo(filtro);
-		}
-		else {
+		} else {
 			paginaVeiculo = veiculoRepository.listarVeiculo(filtro);
 		}
-		
+
 		List<Veiculo> listaVeiculo = paginaVeiculo.getContent();
-		
+
 		ArrayList<VeiculoDTO> listaVeiculoDTO = new ArrayList<>();
-		
-		for(Veiculo veiculo : listaVeiculo) {
+
+		for (Veiculo veiculo : listaVeiculo) {
 			VeiculoDTO veiculoDTO = new VeiculoDTO(veiculo.getPlaca(), veiculo.getMarca(), veiculo.getModelo());
 			listaVeiculoDTO.add(veiculoDTO);
 		}
@@ -67,15 +64,15 @@ public class VeiculoServiceImpl implements VeiculoService {
 	public ArrayList<VeiculoPoiDTO> listarTempoVeiculoPOI(Filtro filtro) {
 		HashMap<String, String> tempoPOI = new HashMap<String, String>();
 		ArrayList<VeiculoPoiDTO> listaVeiculoPoiDTO = new ArrayList<>();
-		
+
 		String veiculo = "TESTE001";
 		tempoPOI.put("PONTO 1", "3 dias 5 horas 2 minutos 5 segundos");
+		tempoPOI.put("PONTO 2", "3 horas 20 minutos 30 segundos");
 		VeiculoPoiDTO veiculoPoiDTO = new VeiculoPoiDTO(veiculo, tempoPOI);
 		listaVeiculoPoiDTO.add(veiculoPoiDTO);
-		
+
 		return listaVeiculoPoiDTO;
-		
+
 	}
 
 }
-

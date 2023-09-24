@@ -21,7 +21,7 @@ public class Poi implements Serializable {
 	@Column(nullable = false)
 	private String nome;
 
-	@Column(nullable = false, precision = 23, scale = 20)
+	@Column(nullable = false, precision = 23, scale = 10)
 	private BigDecimal raio;
 
 	@Column(nullable = false, precision = 22, scale = 20)

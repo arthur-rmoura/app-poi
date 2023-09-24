@@ -19,6 +19,8 @@ import com.api.core.appl.dadosposicao.DadosPosicaoDTO;
 import com.api.core.appl.dadosposicao.repository.spec.DadosPosicaoRepository;
 import com.api.core.appl.dadosposicao.service.spec.DadosPosicaoService;
 import com.api.core.appl.util.Filtro;
+import com.api.core.appl.veiculo.VeiculoDTO;
+import com.api.core.appl.veiculo.service.spec.VeiculoService;
 
 @Service
 public class DadosPosicaoServiceImpl implements DadosPosicaoService {
@@ -26,6 +28,9 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 	@Autowired
 	DadosPosicaoRepository dadosPosicaoRepository;
 
+	@Autowired
+	VeiculoService veiculoService;
+	
 	@Override
 	public ArrayList<DadosPosicaoDTO> listarDadosPosicao(Filtro filtro) {
 
@@ -78,7 +83,18 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 				dadosPosicaoDTO.getVelocidade(), dadosPosicaoDTO.getLongitude(), dadosPosicaoDTO.getLatitude(),
 				dadosPosicaoDTO.getIgnicao());
 
-		dadosPosicaoRepository.inserirDadosPosicao(dadosPosicao);
+		Filtro filtro = new Filtro();
+		filtro.setPlaca(dadosPosicaoDTO.getPlaca());
+		ArrayList<VeiculoDTO> listaVeiculoDTO = veiculoService.listarVeiculo(filtro);
+		
+		if(listaVeiculoDTO.isEmpty()) {
+			VeiculoDTO veiculoDTO = new VeiculoDTO(dadosPosicaoDTO.getPlaca(), "", "");
+			veiculoService.inserirVeiculo(veiculoDTO);
+			dadosPosicaoRepository.inserirDadosPosicao(dadosPosicao);
+		}
+		else {
+			dadosPosicaoRepository.inserirDadosPosicao(dadosPosicao);
+		}
 
 		return dadosPosicaoDTO;
 	}

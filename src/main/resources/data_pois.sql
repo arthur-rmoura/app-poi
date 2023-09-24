@@ -1,3 +1,5 @@
+DELETE FROM db_appl_poi.poi WHERE poi.nome IN ("PONTO 1", "PONTO 2", "PONTO 3", "PONTO 4", "PONTO 5", "PONTO 6", "PONTO 7", "PONTO 8", "PONTO 9", "PONTO 10", "PONTO 11", "PONTO 12", "PONTO 13", "PONTO 14", "PONTO 15", "PONTO 16", "PONTO 17", "PONTO 18", "PONTO 19", "PONTO 20", "PONTO 21", "PONTO 22", "PONTO 23", "PONTO 24");
+
 INSERT INTO db_appl_poi.poi (nome,raio,latitude,longitude) VALUES ("PONTO 1",300.0,-25.56742701740896,-51.47653363645077);
 INSERT INTO db_appl_poi.poi (nome,raio,latitude,longitude) VALUES ("PONTO 2",300.0,-25.568056,-51.480278);
 INSERT INTO db_appl_poi.poi (nome,raio,latitude,longitude) VALUES ("PONTO 3",250.0,-25.414167,-51.566944);
