@@ -85,9 +85,11 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 
 		Filtro filtro = new Filtro();
 		filtro.setPlaca(dadosPosicaoDTO.getPlaca());
+		filtro.setNumeroPagina(1);
+		filtro.setTamanhoPagina(10);
 		ArrayList<VeiculoDTO> listaVeiculoDTO = veiculoService.listarVeiculo(filtro);
 		
-		if(listaVeiculoDTO.isEmpty()) {
+		if(listaVeiculoDTO.isEmpty()) {//testar erro do pageable
 			VeiculoDTO veiculoDTO = new VeiculoDTO(dadosPosicaoDTO.getPlaca(), "", "");
 			veiculoService.inserirVeiculo(veiculoDTO);
 			dadosPosicaoRepository.inserirDadosPosicao(dadosPosicao);
