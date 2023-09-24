@@ -1,7 +1,6 @@
 package com.api.core.appl.veiculo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 
 public class VeiculoDTO implements Serializable {
@@ -10,15 +9,36 @@ public class VeiculoDTO implements Serializable {
 
 	private String placa;
 
-	private String dataPosicao;
+	private String marca;
+	
+	private String modelo;
 
-	private Float velocidade;
+	protected VeiculoDTO() {
+		
+	}
+	
+	public VeiculoDTO(String placa, String marca, String modelo) {
+		super();
+		this.placa = placa;
+		this.marca = marca;
+		this.modelo = modelo;
+	}
 
-	private BigDecimal longitude;
+	public String getMarca() {
+		return marca;
+	}
 
-	private BigDecimal latitude;
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
 
-	private Boolean ignicao;
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
 
 	public String getPlaca() {
 		return placa;
@@ -26,51 +46,6 @@ public class VeiculoDTO implements Serializable {
 
 	public void setPlaca(String placa) {
 		this.placa = placa;
-	}
-
-	public String getDataPosicao() {
-		return dataPosicao;
-	}
-
-	public void setDataPosicao(String dataPosicao) {
-		this.dataPosicao = dataPosicao;
-	}
-
-	public Float getVelocidade() {
-		return velocidade;
-	}
-
-	public void setVelocidade(Float velocidade) {
-		this.velocidade = velocidade;
-	}
-
-	public BigDecimal getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(BigDecimal longitude) {
-		this.longitude = longitude;
-	}
-
-	public BigDecimal getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(BigDecimal latitude) {
-		this.latitude = latitude;
-	}
-
-	public Boolean getIgnicao() {
-		return ignicao;
-	}
-
-	public void setIgnicao(Boolean ignicao) {
-		this.ignicao = ignicao;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
+	}	
 	
 }

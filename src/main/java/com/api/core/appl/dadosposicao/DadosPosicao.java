@@ -3,11 +3,17 @@ package com.api.core.appl.dadosposicao;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.api.core.appl.veiculo.Veiculo;
 
 @Entity
 public class DadosPosicao implements Serializable {
@@ -18,7 +24,7 @@ public class DadosPosicao implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, insertable=false, updatable=false)
 	private String placa;
 
 	@Column(nullable = false)
@@ -38,6 +44,11 @@ public class DadosPosicao implements Serializable {
 
 	@Column(nullable = false)
 	private Boolean ignicao;
+	
+	@ManyToOne(optional=false, cascade= {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+	@JoinColumn(name="placa", nullable=false)
+	private Veiculo veiculo;
+	
 
 	protected DadosPosicao() {
 		// Construtor sem argumentos, requerido pela JPA
