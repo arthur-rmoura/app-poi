@@ -104,4 +104,10 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 		return dadosPosicaoDTO;
 	}
 
+	@Override
+	public ArrayList<DadosPosicaoDTO> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, String placa) {
+		// TODO Auto-generated method stub -> continuar aqui amanhã
+		return null;
+	}
+
 }

@@ -11,4 +11,6 @@ public interface DadosPosicaoService {
 
 	DadosPosicaoDTO inserirDadosPosicao(DadosPosicaoDTO dadosPosicaoDTO);
 
+	ArrayList<DadosPosicaoDTO> listarDadosPosicaoVeiculoIntervalo(double[] intervalos, String placa);
+
 }

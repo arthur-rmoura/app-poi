@@ -3,7 +3,6 @@ package com.api.core.appl.veiculo;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +25,7 @@ public class Veiculo implements Serializable {
 	@Column(nullable = true, length = 50)
 	private String modelo;
 	
-	@OneToMany(mappedBy="veiculo", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="veiculo", fetch = FetchType.LAZY)
 	private List<DadosPosicao> dadosPosicao;
 
 	protected Veiculo() {
