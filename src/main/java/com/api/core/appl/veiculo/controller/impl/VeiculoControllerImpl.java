@@ -63,7 +63,7 @@ public class VeiculoControllerImpl implements VeiculoController {
 		filtro.setMarca(marca);
 		filtro.setModelo(modelo);
 		
-		ArrayList<VeiculoDTO> listaVeiculoDTO = veiculoService.listarVeiculo(filtro);
+		ArrayList<VeiculoDTO> listaVeiculoDTO = veiculoService.listarVeiculoDTO(filtro);
 		
         return new ResponseEntity<ArrayList<VeiculoDTO>>(listaVeiculoDTO, HttpStatus.OK);
     }
@@ -91,7 +91,7 @@ public class VeiculoControllerImpl implements VeiculoController {
 	    		)  
 	    		@RequestBody VeiculoDTO veiculoDTO) {
 			
-			veiculoDTO = veiculoService.inserirVeiculo(veiculoDTO);
+			veiculoDTO = veiculoService.inserirVeiculoDTO(veiculoDTO);
 			return new ResponseEntity<VeiculoDTO>(veiculoDTO, HttpStatus.CREATED);
 			
 	    }

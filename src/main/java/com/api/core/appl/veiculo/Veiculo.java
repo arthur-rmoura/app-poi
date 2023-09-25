@@ -67,4 +67,12 @@ public class Veiculo implements Serializable {
 		this.modelo = modelo;
 	}
 
+	public List<DadosPosicao> getDadosPosicao() {
+		return dadosPosicao;
+	}
+
+	public void setDadosPosicao(List<DadosPosicao> dadosPosicao) {
+		this.dadosPosicao = dadosPosicao;
+	}
+
 }

@@ -133,4 +133,12 @@ public class DadosPosicao implements Serializable {
 		this.epochSecondPosicao = epochSecondPosicao;
 	}
 
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}
+
 }

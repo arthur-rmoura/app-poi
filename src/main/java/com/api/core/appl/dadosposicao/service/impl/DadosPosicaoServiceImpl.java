@@ -19,6 +19,7 @@ import com.api.core.appl.dadosposicao.DadosPosicaoDTO;
 import com.api.core.appl.dadosposicao.repository.spec.DadosPosicaoRepository;
 import com.api.core.appl.dadosposicao.service.spec.DadosPosicaoService;
 import com.api.core.appl.util.Filtro;
+import com.api.core.appl.veiculo.Veiculo;
 import com.api.core.appl.veiculo.VeiculoDTO;
 import com.api.core.appl.veiculo.service.spec.VeiculoService;
 
@@ -85,16 +86,18 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 
 		Filtro filtro = new Filtro();
 		filtro.setPlaca(dadosPosicaoDTO.getPlaca());
-		filtro.setNumeroPagina(1);
+		filtro.setNumeroPagina(0);
 		filtro.setTamanhoPagina(10);
-		ArrayList<VeiculoDTO> listaVeiculoDTO = veiculoService.listarVeiculo(filtro);
+		List<Veiculo> listaVeiculo = veiculoService.listarVeiculo(filtro);
 		
-		if(listaVeiculoDTO.isEmpty()) {//testar erro do pageable
+		if(listaVeiculo.isEmpty()) {
 			VeiculoDTO veiculoDTO = new VeiculoDTO(dadosPosicaoDTO.getPlaca(), "", "");
-			veiculoService.inserirVeiculo(veiculoDTO);
+			Veiculo veiculo = veiculoService.inserirVeiculo(veiculoDTO);
+			dadosPosicao.setVeiculo(veiculo);
 			dadosPosicaoRepository.inserirDadosPosicao(dadosPosicao);
 		}
 		else {
+			dadosPosicao.setVeiculo(listaVeiculo.get(0));
 			dadosPosicaoRepository.inserirDadosPosicao(dadosPosicao);
 		}
 

@@ -22,7 +22,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 	VeiculoRepository veiculoRepository;
 
 	@Override
-	public ArrayList<VeiculoDTO> listarVeiculo(Filtro filtro) {
+	public ArrayList<VeiculoDTO> listarVeiculoDTO(Filtro filtro) {
 
 		Page<Veiculo> paginaVeiculo;
 
@@ -49,15 +49,45 @@ public class VeiculoServiceImpl implements VeiculoService {
 		return listaVeiculoDTO;
 
 	}
+	
+	@Override
+	public List<Veiculo> listarVeiculo(Filtro filtro) {
+
+		Page<Veiculo> paginaVeiculo;
+
+		if (filtro.getPlaca() != null) {
+			paginaVeiculo = veiculoRepository.listarVeiculoPorPlaca(filtro);
+		}
+		else if (filtro.getMarca() != null) {
+			paginaVeiculo = veiculoRepository.listarVeiculoPorMarca(filtro);
+		} else if (filtro.getModelo() != null) {
+			paginaVeiculo = veiculoRepository.listarVeiculoPorModelo(filtro);
+		} else {
+			paginaVeiculo = veiculoRepository.listarVeiculo(filtro);
+		}
+
+		return paginaVeiculo.getContent();
+
+	}
 
 	@Override
-	public VeiculoDTO inserirVeiculo(VeiculoDTO veiculoDTO) {
+	public VeiculoDTO inserirVeiculoDTO(VeiculoDTO veiculoDTO) {
 
 		Veiculo veiculo = new Veiculo(veiculoDTO.getPlaca(), veiculoDTO.getMarca(), veiculoDTO.getModelo());
 
 		veiculoRepository.inserirVeiculo(veiculo);
 
 		return veiculoDTO;
+	}
+	
+	@Override
+	public Veiculo inserirVeiculo(VeiculoDTO veiculoDTO) {
+
+		Veiculo veiculo = new Veiculo(veiculoDTO.getPlaca(), veiculoDTO.getMarca(), veiculoDTO.getModelo());
+
+		veiculoRepository.inserirVeiculo(veiculo);
+
+		return veiculo;
 	}
 
 	@Override
