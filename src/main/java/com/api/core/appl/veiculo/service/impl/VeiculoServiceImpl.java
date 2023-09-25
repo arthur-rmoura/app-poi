@@ -1,9 +1,10 @@
 package com.api.core.appl.veiculo.service.impl;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +15,7 @@ import com.api.core.appl.veiculo.VeiculoDTO;
 import com.api.core.appl.veiculo.VeiculoPoiDTO;
 import com.api.core.appl.veiculo.repository.spec.VeiculoRepository;
 import com.api.core.appl.veiculo.service.spec.VeiculoService;
-import com.api.core.appl.dadosposicao.DadosPosicaoDTO;
-import com.api.core.appl.dadosposicao.service.spec.DadosPosicaoService;
+import com.api.core.appl.dadosposicao.DadosPosicao;
 import com.api.core.appl.poi.PoiDTO;
 import com.api.core.appl.poi.service.spec.PoiService;
 import com.api.core.appl.util.Filtro;
@@ -29,9 +29,6 @@ public class VeiculoServiceImpl implements VeiculoService {
 	
 	@Autowired
 	PoiService poiService;
-	
-	@Autowired
-	DadosPosicaoService dadosPosicaoService;
 
 	@Override
 	public ArrayList<VeiculoDTO> listarVeiculoDTO(Filtro filtro) {
@@ -81,6 +78,12 @@ public class VeiculoServiceImpl implements VeiculoService {
 		return paginaVeiculo.getContent();
 
 	}
+	
+	@Override
+	public List<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro) {
+		Page<DadosPosicao> paginaDadosPosicao = veiculoRepository.listarDadosPosicaoVeiculoIntervalo(intervalo, filtro);
+		return paginaDadosPosicao.getContent();
+	}
 
 	@Override
 	public VeiculoDTO inserirVeiculoDTO(VeiculoDTO veiculoDTO) {
@@ -116,11 +119,33 @@ public class VeiculoServiceImpl implements VeiculoService {
 			double[] intervalos = FuncoesLib.calcularIntervalos(poiDTO.getLatitude(), poiDTO.getLongitude(), poiDTO.getRaio());
 			
 			for(VeiculoDTO veiculoDTO : listaVeiculoDTO) {
-				List<DadosPosicaoDTO> listaDadosPosicao = dadosPosicaoService.listarDadosPosicaoVeiculoIntervalo(intervalos, veiculoDTO.getPlaca());
-				BigInteger somaTempoInteiro = new BigInteger("0"); 
-				for(DadosPosicaoDTO dadosPosicaoDTO : listaDadosPosicao) {
-					//somar o tempo aqui
+				filtro.setPlaca(veiculoDTO.getPlaca());
+
+				List<DadosPosicao> listaDadosPosicao = this.listarDadosPosicaoVeiculoIntervalo(intervalos, filtro);
+//				listaDadosPosicao = listaDadosPosicao.stream().sorted(Comparator.comparing(DadosPosicao::getEpochSecondPosicao)).collect(Collectors.toList());
+				List<Long> listaEpochSecond = listaDadosPosicao.stream().map(e->e.getEpochSecondPosicao()).collect(Collectors.toList());
+				listaEpochSecond.sort(Comparator.comparingLong(Long::longValue));
+				
+				Long limiteTempo = 500L;
+				Long somaTempoLong = 0L; 
+				Long ultimoDadoPosicao = Long.MAX_VALUE;
+				ArrayList<Long> listaTemposPOI = new ArrayList<Long>();
+				for(Long epochsecond : listaEpochSecond) {
+					if(epochsecond - ultimoDadoPosicao > limiteTempo) {
+						listaTemposPOI.add(somaTempoLong);
+						somaTempoLong = 0L;
+						ultimoDadoPosicao = Long.MAX_VALUE;
+					}
+					else {
+						somaTempoLong = somaTempoLong + epochsecond;
+						ultimoDadoPosicao = epochsecond;
+					}
 				}
+				somaTempoLong = listaTemposPOI.stream().reduce(0L, Long::sum);
+				System.out.println();
+				System.out.println("POI: " +  poiDTO.getNome() + " Tamanho da Lista: " + listaTemposPOI.size());
+				System.out.println("Soma Total:" +  somaTempoLong);
+				System.out.println();
 			}
 		}
 		

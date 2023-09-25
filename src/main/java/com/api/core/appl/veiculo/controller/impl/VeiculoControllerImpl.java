@@ -118,6 +118,8 @@ public class VeiculoControllerImpl implements VeiculoController {
 			Filtro filtro = new Filtro();
 			filtro.setNome(nomePoi);
 			filtro.setData(data);
+			filtro.setNumeroPagina(0);
+			filtro.setTamanhoPagina(1000000);
 			
 			ArrayList<VeiculoPoiDTO> listaVeiculoPoiDTO = veiculoService.listarTempoVeiculoPOI(filtro);
 			

@@ -30,7 +30,8 @@ public class FuncoesLib {
 		
 		double distancia=0.0d;
 		//double variacao=0.00005d; //original
-		double variacao=0.00000005d; //pode diminuir um 0
+		//double variacao=0.0000005d; //44 segundos
+		double variacao=0.000005d; // 5 segundos
 		
 		distancia=0.0d;
 		while(distancia < raio.doubleValue()) {

@@ -14,4 +14,7 @@ public interface DadosPosicaoRepository {
 	Page<DadosPosicao> listarDadosPosicaoPorData(Filtro filtro);
 
 	Page<DadosPosicao> listarDadosPosicaoPorPlaca(Filtro filtro);
+
+	Page<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro);
+
 }

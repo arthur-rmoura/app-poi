@@ -1,5 +1,6 @@
 package com.api.core.appl.veiculo.repository.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -8,12 +9,18 @@ import org.springframework.stereotype.Repository;
 import com.api.core.appl.veiculo.Veiculo;
 import com.api.core.appl.veiculo.repository.spec.VeiculoRepository;
 import com.api.core.appl.veiculo.repository.spec.VeiculoRepositoryData;
+import com.api.core.appl.dadosposicao.DadosPosicao;
+import com.api.core.appl.dadosposicao.repository.spec.DadosPosicaoRepository;
 import com.api.core.appl.util.Filtro;
 
 @Repository
 public class VeiculoRepositoryImpl implements VeiculoRepository{
 	
 	private final VeiculoRepositoryData veiculoRepositoryData;
+	
+	
+	@Autowired
+	private DadosPosicaoRepository dadosRepository;
 	
 	public VeiculoRepositoryImpl(VeiculoRepositoryData veiculoRepositoryData) {
 		super();
@@ -50,6 +57,12 @@ public class VeiculoRepositoryImpl implements VeiculoRepository{
 	public Page<Veiculo> listarVeiculoPorModelo(Filtro filtro) {
 		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
 		return veiculoRepositoryData.findByModelo(filtro.getModelo(), pageable);
+	}
+
+
+	@Override
+	public Page<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro) {
+		return dadosRepository.listarDadosPosicaoVeiculoIntervalo(intervalo, filtro);
 	}
 
 }

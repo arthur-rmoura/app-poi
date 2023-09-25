@@ -1,5 +1,6 @@
 package com.api.core.appl.dadosposicao.repository.impl;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -59,6 +60,14 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
 		return dadosPosicaoRepositoryData.findByPlaca(filtro.getPlaca(), pageable);
 
+	}
+
+
+	@Override
+	public Page<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro) {
+		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
+		//colocar a data depois 
+		return dadosPosicaoRepositoryData.findByCustomQuery(filtro.getPlaca(), new BigDecimal(intervalo[0]), new BigDecimal(intervalo[1]), new BigDecimal(intervalo[2]), new BigDecimal(intervalo[3]), pageable);
 	}
 
 }
