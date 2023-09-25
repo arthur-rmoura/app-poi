@@ -29,11 +29,31 @@ public class FuncoesLib {
 		double centroLong = longitude.doubleValue();
 		
 		double distancia=0.0d;
-		double variacao=0.00005d;
+		//double variacao=0.00005d; //original
+		double variacao=0.00000005d; //pode diminuir um 0
 		
+		distancia=0.0d;
 		while(distancia < raio.doubleValue()) {
 			maxLat = maxLat + variacao;
 			distancia = calculateEquirectangularDistance(centroLat, centroLong, maxLat, centroLong);
+		}
+		
+		distancia=0.0d;
+		while(distancia < raio.doubleValue()) {
+			minLat = minLat - variacao;
+			distancia = calculateEquirectangularDistance(centroLat, centroLong, minLat, centroLong);
+		}
+		
+		distancia=0.0d;
+		while(distancia < raio.doubleValue()) {
+			maxLong = maxLong + variacao;
+			distancia = calculateEquirectangularDistance(centroLat, centroLong, centroLat, maxLong);
+		}
+		
+		distancia=0.0d;
+		while(distancia < raio.doubleValue()) {
+			minLong = minLong - variacao;
+			distancia = calculateEquirectangularDistance(centroLat, centroLong, centroLat, minLong);
 		}
 		
 		double[] intervaloFinal = {minLat, maxLat, minLong, maxLong}; 
