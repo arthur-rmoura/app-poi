@@ -1,6 +1,8 @@
 package com.api.core.appl.dadosposicao;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 
 public class DadosPosicaoDTO implements Serializable {
 
@@ -12,11 +14,26 @@ public class DadosPosicaoDTO implements Serializable {
 
 	private Float velocidade;
 
-	private Double longitude;
+	private BigDecimal longitude;
 
-	private Double latitude;
+	private BigDecimal latitude;
 
 	private Boolean ignicao;
+	
+	protected DadosPosicaoDTO() {
+	
+	}
+	
+	public DadosPosicaoDTO(String placa, String dataPosicao, Float velocidade, BigDecimal longitude,
+			BigDecimal latitude, Boolean ignicao) {
+		super();
+		this.placa = placa;
+		this.dataPosicao = dataPosicao;
+		this.velocidade = velocidade;
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.ignicao = ignicao;
+	}
 
 	public String getPlaca() {
 		return placa;
@@ -42,19 +59,19 @@ public class DadosPosicaoDTO implements Serializable {
 		this.velocidade = velocidade;
 	}
 
-	public Double getLongitude() {
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 
-	public Double getLatitude() {
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
@@ -65,10 +82,5 @@ public class DadosPosicaoDTO implements Serializable {
 	public void setIgnicao(Boolean ignicao) {
 		this.ignicao = ignicao;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
 	
 }
