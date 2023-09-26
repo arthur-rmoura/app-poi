@@ -1,6 +1,7 @@
 package com.api.core.appl.dadosposicao.repository.spec;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ public interface DadosPosicaoRepositoryData extends PagingAndSortingRepository<D
 
 	Page<DadosPosicao> findByPlaca(String placa, Pageable pageable);
 
-	@Query("SELECT dp FROM DadosPosicao dp WHERE dp.placa = :placa and dp.latitude between :minLat and :maxLat and dp.longitude between :minLong and :maxLong")
-	Page<DadosPosicao> findByCustomQuery(String placa, BigDecimal minLat, BigDecimal maxLat, BigDecimal minLong, BigDecimal maxLong, Pageable pageable);
+	@Query("SELECT dp FROM DadosPosicao dp WHERE dp.placa = :placa and dp.latitude >= :minLat and dp.latitude <= :maxLat and dp.longitude >= :minLong and dp.longitude <= :maxLong")
+	List<DadosPosicao> findByCustomQuery(String placa, BigDecimal minLat, BigDecimal maxLat, BigDecimal minLong, BigDecimal maxLong);
 	
 }

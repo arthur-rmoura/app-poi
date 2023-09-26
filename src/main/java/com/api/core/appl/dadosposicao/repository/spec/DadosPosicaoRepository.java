@@ -1,5 +1,7 @@
 package com.api.core.appl.dadosposicao.repository.spec;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.api.core.appl.dadosposicao.DadosPosicao;
@@ -15,6 +17,6 @@ public interface DadosPosicaoRepository {
 
 	Page<DadosPosicao> listarDadosPosicaoPorPlaca(Filtro filtro);
 
-	Page<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro);
+	List<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro);
 
 }

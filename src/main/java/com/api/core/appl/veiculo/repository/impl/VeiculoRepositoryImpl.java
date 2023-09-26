@@ -1,5 +1,7 @@
 package com.api.core.appl.veiculo.repository.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,7 +63,7 @@ public class VeiculoRepositoryImpl implements VeiculoRepository{
 
 
 	@Override
-	public Page<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro) {
+	public List<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro) {
 		return dadosRepository.listarDadosPosicaoVeiculoIntervalo(intervalo, filtro);
 	}
 

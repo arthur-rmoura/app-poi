@@ -1,5 +1,6 @@
 package com.api.core.appl.veiculo.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -10,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.api.core.appl.veiculo.PoiVeiculoDTO;
 import com.api.core.appl.veiculo.Veiculo;
 import com.api.core.appl.veiculo.VeiculoDTO;
+import com.api.core.appl.veiculo.VeiculoPoiDTO;
 import com.api.core.appl.veiculo.repository.spec.VeiculoRepository;
 import com.api.core.appl.veiculo.service.spec.VeiculoService;
 import com.api.core.appl.dadosposicao.DadosPosicao;
@@ -81,8 +82,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 	
 	@Override
 	public List<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro) {
-		Page<DadosPosicao> paginaDadosPosicao = veiculoRepository.listarDadosPosicaoVeiculoIntervalo(intervalo, filtro);
-		return paginaDadosPosicao.getContent();
+		return veiculoRepository.listarDadosPosicaoVeiculoIntervalo(intervalo, filtro);
 	}
 
 	@Override
@@ -107,25 +107,25 @@ public class VeiculoServiceImpl implements VeiculoService {
 	}
 
 	@Override
-	public ArrayList<PoiVeiculoDTO> listarTempoVeiculoPOI(Filtro filtro) {
+	public ArrayList<VeiculoPoiDTO> listarTempoVeiculoPOI(Filtro filtro) {
 		HashMap<String, String> veiculoPOI = new HashMap<String, String>();
-		ArrayList<PoiVeiculoDTO> listaVeiculoPoiDTO = new ArrayList<>();
+		ArrayList<VeiculoPoiDTO> listaVeiculoPoiDTO = new ArrayList<>();
 		
 		List<PoiDTO> listaPoiDTO = poiService.listarPoi(filtro);
 		List<VeiculoDTO> listaVeiculoDTO = this.listarVeiculoDTO(filtro);
 		
-		for(PoiDTO poiDTO : listaPoiDTO) {
 			
-			double[] intervalos = FuncoesLib.calcularIntervalos(poiDTO.getLatitude(), poiDTO.getLongitude(), poiDTO.getRaio());
+		for(VeiculoDTO veiculoDTO : listaVeiculoDTO) {
+			filtro.setPlaca(veiculoDTO.getPlaca());
 			
-			for(VeiculoDTO veiculoDTO : listaVeiculoDTO) {
-				filtro.setPlaca(veiculoDTO.getPlaca());
-
+			for(PoiDTO poiDTO : listaPoiDTO) {
+				
+				double[] intervalos = FuncoesLib.calcularIntervalos(poiDTO.getLatitude(), poiDTO.getLongitude(), poiDTO.getRaio().divide(new BigDecimal("1000.0")));
 				List<DadosPosicao> listaDadosPosicao = this.listarDadosPosicaoVeiculoIntervalo(intervalos, filtro);
 				List<Long> listaEpochSecond = listaDadosPosicao.stream().map(e->e.getEpochSecondPosicao()).collect(Collectors.toList());
 				listaEpochSecond.sort(Comparator.comparingLong(Long::longValue));
 				
-				Long limiteTempo = 1800L; //5horas
+				Long limiteTempo = 10000L; //2.7horas
 				Long somaTempoLong = 0L; 
 				Long ultimoDadoPosicao = Long.MAX_VALUE;
 				Long diferenca = 0L;
@@ -144,17 +144,10 @@ public class VeiculoServiceImpl implements VeiculoService {
 				}
 				listaTemposPOI.add(somaTempoLong);
 				somaTempoLong = listaTemposPOI.stream().reduce(0L, Long::sum);
-				if(somaTempoLong > 0 && (poiDTO.getNome().equals("PONTO 2") || poiDTO.getNome().equals("PONTO 3"))) {
-					System.out.println();
-					System.out.println("POI: " +  poiDTO.getNome() + " Tamanho da Lista: " + listaTemposPOI.size());
-					System.out.println("Veículo: " +  veiculoDTO.getPlaca());
-					System.out.println("Soma Total:" +  somaTempoLong);
-					System.out.println();
-				}
-				veiculoPOI.put(veiculoDTO.getPlaca(), somaTempoLong.toString());
+				veiculoPOI.put(poiDTO.getNome(), somaTempoLong.toString());
 			}
-			PoiVeiculoDTO poiVeiculoDTO = new PoiVeiculoDTO(poiDTO.getNome(), veiculoPOI);
-			listaVeiculoPoiDTO.add(poiVeiculoDTO);
+			VeiculoPoiDTO veiculoPoiDTO = new VeiculoPoiDTO(veiculoDTO.getPlaca(), veiculoPOI);
+			listaVeiculoPoiDTO.add(veiculoPoiDTO);
 			veiculoPOI = new HashMap<String, String>();
 		}
 		

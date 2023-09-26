@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.http.ResponseEntity;
 
 import com.api.core.appl.veiculo.VeiculoDTO;
-import com.api.core.appl.veiculo.PoiVeiculoDTO;
+import com.api.core.appl.veiculo.VeiculoPoiDTO;
 
 public interface VeiculoController  {
 	
@@ -14,6 +14,6 @@ public interface VeiculoController  {
 
 	ResponseEntity<VeiculoDTO> inserirVeiculo(VeiculoDTO veiculoDTO);
 
-	ResponseEntity<ArrayList<PoiVeiculoDTO>> listarTempoVeiculoPOI(String placa, String data);
+	ResponseEntity<ArrayList<VeiculoPoiDTO>> listarTempoVeiculoPOI(String placa, String data);
 
 }

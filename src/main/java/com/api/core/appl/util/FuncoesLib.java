@@ -29,7 +29,7 @@ public class FuncoesLib {
 		double centroLong = longitude.doubleValue();
 		
 		double distancia=0.0d;
-		double variacao=0.000005d; //Para aumentar a precisão basta dividir por 10
+		double variacao=0.0000005d; //Para aumentar a precisão basta dividir por 10
 		
 		distancia=0.0d;
 		while(distancia < raio.doubleValue()) {
