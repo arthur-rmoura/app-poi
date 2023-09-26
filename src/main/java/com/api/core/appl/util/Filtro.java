@@ -8,6 +8,8 @@ public class Filtro {
 	private String marca;
 	private String modelo;
 	private String data;
+	private String dataInicial;
+	private String dataFinal;
 	private String nome;
 	private BigDecimal raio;
 	private Integer numeroPagina;
@@ -60,5 +62,17 @@ public class Filtro {
 	}
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
+	}
+	public String getDataInicial() {
+		return dataInicial;
+	}
+	public void setDataInicial(String dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+	public String getDataFinal() {
+		return dataFinal;
+	}
+	public void setDataFinal(String dataFinal) {
+		this.dataFinal = dataFinal;
 	}
 }

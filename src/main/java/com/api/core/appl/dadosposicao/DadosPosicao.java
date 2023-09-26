@@ -3,7 +3,6 @@ package com.api.core.appl.dadosposicao;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +44,7 @@ public class DadosPosicao implements Serializable {
 	@Column(nullable = false)
 	private Boolean ignicao;
 	
-	@ManyToOne(optional=false, cascade= {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+	@ManyToOne(optional=false, fetch = FetchType.LAZY)
 	@JoinColumn(name="placa", nullable=false)
 	private Veiculo veiculo;
 	

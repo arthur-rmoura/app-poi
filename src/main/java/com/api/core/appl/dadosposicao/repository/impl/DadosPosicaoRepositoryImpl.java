@@ -1,8 +1,12 @@
 package com.api.core.appl.dadosposicao.repository.impl;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.data.domain.Page;
@@ -40,7 +44,7 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 
 
 	@Override
-	public Page<DadosPosicao> listarDadosPosicaoPorData(Filtro filtro) {
+	public Page<DadosPosicao> listarDadosPosicaoPorDataTime(Filtro filtro) {
 		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
 			    .parseCaseInsensitive()
 			    .appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)")
@@ -52,6 +56,36 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
 		return dadosPosicaoRepositoryData.findByEpochSecondPosicaoAndTimezonePosicao(timestampPosicao, timezonePosicao, pageable);
 	}
+	
+	@Override
+	public Page<DadosPosicao> listarDadosPosicaoPorData(Filtro filtro) {
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+			    .parseCaseInsensitive()
+			    .appendPattern("uuuu-MM-dd")
+			    .toFormatter(Locale.ENGLISH);
+		LocalDate localDate = LocalDate.parse(filtro.getData(), formatter);
+		long timestampPosicaoInicio = localDate.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toEpochSecond();
+		long timestampPosicaoFim = timestampPosicaoInicio + 86400L;
+		String timezonePosicao = ZoneId.of("America/Sao_Paulo").getId();
+		
+		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
+		return dadosPosicaoRepositoryData.findByCustomQueryDataPaged(timestampPosicaoInicio, timestampPosicaoFim, timezonePosicao, pageable);
+	}
+	
+	@Override
+	public Page<DadosPosicao> listarDadosPosicaoPorDataPlaca(Filtro filtro) {
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+			    .parseCaseInsensitive()
+			    .appendPattern("uuuu-MM-dd")
+			    .toFormatter(Locale.ENGLISH);
+		LocalDate localDate = LocalDate.parse(filtro.getData(), formatter);
+		long timestampPosicaoInicio = localDate.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toEpochSecond();
+		long timestampPosicaoFim = timestampPosicaoInicio + 86400L;
+		String timezonePosicao = ZoneId.of("America/Sao_Paulo").getId();
+		
+		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
+		return dadosPosicaoRepositoryData.findByCustomQueryDataPlacadPaged(filtro.getPlaca(), timestampPosicaoInicio, timestampPosicaoFim, timezonePosicao, pageable);
+	}
 
 
 	@Override
@@ -59,6 +93,27 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
 		return dadosPosicaoRepositoryData.findByPlaca(filtro.getPlaca(), pageable);
 
+	}
+
+
+	@Override
+	public List<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro) {
+		if(filtro.getData() != null) {
+			DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+				    .parseCaseInsensitive()
+				    .appendPattern("uuuu-MM-dd")
+				    .toFormatter(Locale.ENGLISH);
+			LocalDate localDate = LocalDate.parse(filtro.getData(), formatter);
+			long timestampPosicaoInicio = localDate.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toEpochSecond();
+			long timestampPosicaoFim = timestampPosicaoInicio + 86400L;
+			String timezonePosicao = ZoneId.of("America/Sao_Paulo").getId();
+			
+			return dadosPosicaoRepositoryData.findByCustomQueryIntervaloDated(filtro.getPlaca(), new BigDecimal(intervalo[0]), new BigDecimal(intervalo[1]), new BigDecimal(intervalo[2]), new BigDecimal(intervalo[3]), timestampPosicaoInicio, timestampPosicaoFim, timezonePosicao);
+		}
+		else {
+			return dadosPosicaoRepositoryData.findByCustomQuery(filtro.getPlaca(), new BigDecimal(intervalo[0]), new BigDecimal(intervalo[1]), new BigDecimal(intervalo[2]), new BigDecimal(intervalo[3]));
+		}
+		
 	}
 
 }

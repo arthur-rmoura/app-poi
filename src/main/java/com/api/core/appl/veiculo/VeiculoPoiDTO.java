@@ -1,36 +1,41 @@
 package com.api.core.appl.veiculo;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class VeiculoPoiDTO {
 
-	String veiculo;
-	HashMap<String, String> tempoPOI;
+	private String poi;
+	private LinkedHashMap<String, String> veiculoPOI;
 	
 	protected VeiculoPoiDTO() {
 		
 	}
 	
-	public VeiculoPoiDTO(String veiculo, HashMap<String, String> tempoPOI) {
+
+	public VeiculoPoiDTO(String poi, LinkedHashMap<String, String> veiculoPOI) {
 		super();
-		this.veiculo = veiculo;
-		this.tempoPOI = tempoPOI;
+		this.poi = poi;
+		this.veiculoPOI = veiculoPOI;
 	}
 
-	public String getVeiculo() {
-		return veiculo;
+	public String getPoi() {
+		return poi;
 	}
-	public void setVeiculo(String veiculo) {
-		this.veiculo = veiculo;
+
+	public void setPoi(String poi) {
+		this.poi = poi;
 	}
-	public HashMap<String, String> getTempoPOI() {
-		return tempoPOI;
+
+
+	public LinkedHashMap<String, String> getVeiculoPOI() {
+		return veiculoPOI;
 	}
-	public void setTempoPOI(HashMap<String, String> tempoPOI) {
-		this.tempoPOI = tempoPOI;
+
+	public void setVeiculoPOI(LinkedHashMap<String, String> veiculoPOI) {
+		this.veiculoPOI = veiculoPOI;
 	}
 	
 	
-	
+
 
 }

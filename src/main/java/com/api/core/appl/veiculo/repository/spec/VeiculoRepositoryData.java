@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.api.core.appl.veiculo.Veiculo;
 
-public interface VeiculoRepositoryData extends PagingAndSortingRepository<Veiculo, Long> {
+public interface VeiculoRepositoryData extends PagingAndSortingRepository<Veiculo, String> {
 
 	Page<Veiculo> findAll(Pageable pageable);
 

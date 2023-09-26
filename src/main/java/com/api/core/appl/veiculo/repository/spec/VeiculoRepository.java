@@ -1,8 +1,11 @@
 package com.api.core.appl.veiculo.repository.spec;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.api.core.appl.veiculo.Veiculo;
+import com.api.core.appl.dadosposicao.DadosPosicao;
 import com.api.core.appl.util.Filtro;
 
 public interface VeiculoRepository {
@@ -16,4 +19,6 @@ public interface VeiculoRepository {
 	Page<Veiculo> listarVeiculoPorMarca(Filtro filtro);
 
 	Page<Veiculo> listarVeiculoPorModelo(Filtro filtro);
+
+	List<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro);
 }

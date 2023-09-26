@@ -6,6 +6,7 @@ import java.util.List;
 import com.api.core.appl.veiculo.Veiculo;
 import com.api.core.appl.veiculo.VeiculoDTO;
 import com.api.core.appl.veiculo.VeiculoPoiDTO;
+import com.api.core.appl.dadosposicao.DadosPosicao;
 import com.api.core.appl.util.Filtro;
 
 public interface VeiculoService {
@@ -19,6 +20,8 @@ public interface VeiculoService {
 	Veiculo inserirVeiculo(VeiculoDTO veiculoDTO);
 
 	ArrayList<VeiculoPoiDTO> listarTempoVeiculoPOI(Filtro filtro);
+
+	List<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro);
 
 	
 
