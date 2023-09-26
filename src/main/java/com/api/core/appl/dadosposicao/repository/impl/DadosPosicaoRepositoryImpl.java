@@ -1,6 +1,7 @@
 package com.api.core.appl.dadosposicao.repository.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -43,7 +44,7 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 
 
 	@Override
-	public Page<DadosPosicao> listarDadosPosicaoPorData(Filtro filtro) {
+	public Page<DadosPosicao> listarDadosPosicaoPorDataTime(Filtro filtro) {
 		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
 			    .parseCaseInsensitive()
 			    .appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)")
@@ -54,6 +55,36 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 		
 		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
 		return dadosPosicaoRepositoryData.findByEpochSecondPosicaoAndTimezonePosicao(timestampPosicao, timezonePosicao, pageable);
+	}
+	
+	@Override
+	public Page<DadosPosicao> listarDadosPosicaoPorData(Filtro filtro) {
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+			    .parseCaseInsensitive()
+			    .appendPattern("uuuu-MM-dd")
+			    .toFormatter(Locale.ENGLISH);
+		LocalDate localDate = LocalDate.parse(filtro.getData(), formatter);
+		long timestampPosicaoInicio = localDate.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toEpochSecond();
+		long timestampPosicaoFim = timestampPosicaoInicio + 86400L;
+		String timezonePosicao = ZoneId.of("America/Sao_Paulo").getId();
+		
+		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
+		return dadosPosicaoRepositoryData.findByCustomQueryDataPaged(timestampPosicaoInicio, timestampPosicaoFim, timezonePosicao, pageable);
+	}
+	
+	@Override
+	public Page<DadosPosicao> listarDadosPosicaoPorDataPlaca(Filtro filtro) {
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+			    .parseCaseInsensitive()
+			    .appendPattern("uuuu-MM-dd")
+			    .toFormatter(Locale.ENGLISH);
+		LocalDate localDate = LocalDate.parse(filtro.getData(), formatter);
+		long timestampPosicaoInicio = localDate.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toEpochSecond();
+		long timestampPosicaoFim = timestampPosicaoInicio + 86400L;
+		String timezonePosicao = ZoneId.of("America/Sao_Paulo").getId();
+		
+		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
+		return dadosPosicaoRepositoryData.findByCustomQueryDataPlacadPaged(filtro.getPlaca(), timestampPosicaoInicio, timestampPosicaoFim, timezonePosicao, pageable);
 	}
 
 
@@ -70,15 +101,14 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 		if(filtro.getData() != null) {
 			DateTimeFormatter formatter = new DateTimeFormatterBuilder()
 				    .parseCaseInsensitive()
-				    //.appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)")
 				    .appendPattern("uuuu-MM-dd")
 				    .toFormatter(Locale.ENGLISH);
-			ZonedDateTime zonedDateTime = ZonedDateTime.parse(filtro.getData().replace("(Hora oficial do Brasil)", "(Brasilia Time)"), formatter);
-			long timestampPosicaoInicio = zonedDateTime.toLocalDate().atStartOfDay(ZoneId.of(zonedDateTime.getZone().getId())).toEpochSecond();
+			LocalDate localDate = LocalDate.parse(filtro.getData(), formatter);
+			long timestampPosicaoInicio = localDate.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toEpochSecond();
 			long timestampPosicaoFim = timestampPosicaoInicio + 86400L;
-			String timezonePosicao = zonedDateTime.getZone().getId();
+			String timezonePosicao = ZoneId.of("America/Sao_Paulo").getId();
 			
-			return dadosPosicaoRepositoryData.findByCustomQueryComData(filtro.getPlaca(), new BigDecimal(intervalo[0]), new BigDecimal(intervalo[1]), new BigDecimal(intervalo[2]), new BigDecimal(intervalo[3]), timestampPosicaoInicio, timestampPosicaoFim, timezonePosicao);
+			return dadosPosicaoRepositoryData.findByCustomQueryIntervaloDated(filtro.getPlaca(), new BigDecimal(intervalo[0]), new BigDecimal(intervalo[1]), new BigDecimal(intervalo[2]), new BigDecimal(intervalo[3]), timestampPosicaoInicio, timestampPosicaoFim, timezonePosicao);
 		}
 		else {
 			return dadosPosicaoRepositoryData.findByCustomQuery(filtro.getPlaca(), new BigDecimal(intervalo[0]), new BigDecimal(intervalo[1]), new BigDecimal(intervalo[2]), new BigDecimal(intervalo[3]));

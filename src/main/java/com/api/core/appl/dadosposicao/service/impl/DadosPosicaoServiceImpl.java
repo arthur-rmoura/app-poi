@@ -37,6 +37,9 @@ public class DadosPosicaoServiceImpl implements DadosPosicaoService {
 
 		Page<DadosPosicao> paginaDadosPosicao;
 		
+		if(filtro.getPlaca() != null && filtro.getData() != null) {
+			paginaDadosPosicao = dadosPosicaoRepository.listarDadosPosicaoPorDataPlaca(filtro);
+		}
 		if(filtro.getPlaca() != null) {
 			paginaDadosPosicao = dadosPosicaoRepository.listarDadosPosicaoPorPlaca(filtro);
 		}

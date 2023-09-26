@@ -23,7 +23,13 @@ public interface DadosPosicaoRepositoryData extends PagingAndSortingRepository<D
 	List<DadosPosicao> findByCustomQuery(String placa, BigDecimal minLat, BigDecimal maxLat, BigDecimal minLong, BigDecimal maxLong);
 
 	@Query("SELECT dp FROM DadosPosicao dp WHERE dp.placa = :placa and dp.latitude >= :minLat and dp.latitude <= :maxLat and dp.longitude >= :minLong and dp.longitude <= :maxLong and "
-			+ "dp.epochSecondPosicao between timestampPosicaoInicio and timestampPosicaoFim and dp.timezonePosicao = timezonePosicao")
-	List<DadosPosicao> findByCustomQueryComData(String placa, BigDecimal minLat, BigDecimal maxLat, BigDecimal minLong, BigDecimal maxLong, long timestampPosicaoInicio,  long timestampPosicaoFim, String timezonePosicao);
+			+ "dp.epochSecondPosicao between :timestampPosicaoInicio and :timestampPosicaoFim and dp.timezonePosicao = :timezonePosicao")
+	List<DadosPosicao> findByCustomQueryIntervaloDated(String placa, BigDecimal minLat, BigDecimal maxLat, BigDecimal minLong, BigDecimal maxLong, long timestampPosicaoInicio,  long timestampPosicaoFim, String timezonePosicao);
+
+	@Query("SELECT dp FROM DadosPosicao dp WHERE dp.placa = :placa and dp.epochSecondPosicao between :timestampPosicaoInicio and :timestampPosicaoFim and dp.timezonePosicao = :timezonePosicao")
+	Page<DadosPosicao> findByCustomQueryDataPlacadPaged(String placa, long timestampPosicaoInicio, long timestampPosicaoFim, String timezonePosicao, Pageable pageable);
+	
+	@Query("SELECT dp FROM DadosPosicao dp WHERE dp.epochSecondPosicao between :timestampPosicaoInicio and :timestampPosicaoFim and dp.timezonePosicao = :timezonePosicao")
+	Page<DadosPosicao> findByCustomQueryDataPaged(long timestampPosicaoInicio, long timestampPosicaoFim, String timezonePosicao, Pageable pageable);
 	
 }
