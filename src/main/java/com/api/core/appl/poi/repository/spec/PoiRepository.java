@@ -14,4 +14,6 @@ public interface PoiRepository {
 	Page<Poi> listarPoiPorNome(Filtro filtro);
 
 	Page<Poi> listarPoiPorRaio(Filtro filtro);
+
+	Page<Poi> listarPoiPorNomeRaio(Filtro filtro);
 }
