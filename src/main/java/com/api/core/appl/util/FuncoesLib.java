@@ -58,5 +58,14 @@ public class FuncoesLib {
 		double[] intervaloFinal = {minLat, maxLat, minLong, maxLong}; 
 		return intervaloFinal;
 	}
+	
+	public static String secondsToTime(Long totalSeconds) {
+		
+		long hours = totalSeconds / 3600;
+		long minutes = (totalSeconds % 3600) / 60;
+		long seconds = totalSeconds % 60;
+		
+		return String.format("%02dh %02dm %02ds", hours, minutes, seconds);
+	}
 
 }

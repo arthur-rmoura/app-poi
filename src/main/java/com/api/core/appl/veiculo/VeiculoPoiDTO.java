@@ -1,18 +1,18 @@
 package com.api.core.appl.veiculo;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class VeiculoPoiDTO {
 
 	private String poi;
-	private HashMap<String, String> veiculoPOI;
+	private LinkedHashMap<String, String> veiculoPOI;
 	
 	protected VeiculoPoiDTO() {
 		
 	}
 	
 
-	public VeiculoPoiDTO(String poi, HashMap<String, String> veiculoPOI) {
+	public VeiculoPoiDTO(String poi, LinkedHashMap<String, String> veiculoPOI) {
 		super();
 		this.poi = poi;
 		this.veiculoPOI = veiculoPOI;
@@ -27,11 +27,11 @@ public class VeiculoPoiDTO {
 	}
 
 
-	public HashMap<String, String> getVeiculoPOI() {
+	public LinkedHashMap<String, String> getVeiculoPOI() {
 		return veiculoPOI;
 	}
 
-	public void setVeiculoPOI(HashMap<String, String> veiculoPOI) {
+	public void setVeiculoPOI(LinkedHashMap<String, String> veiculoPOI) {
 		this.veiculoPOI = veiculoPOI;
 	}
 	

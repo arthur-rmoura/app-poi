@@ -3,7 +3,7 @@ package com.api.core.appl.veiculo.service.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,10 +108,11 @@ public class VeiculoServiceImpl implements VeiculoService {
 
 	@Override
 	public ArrayList<VeiculoPoiDTO> listarTempoVeiculoPOI(Filtro filtro) {
-		HashMap<String, String> veiculoPOI = new HashMap<String, String>();
+		LinkedHashMap<String, String> veiculoPOI = new LinkedHashMap<String, String>();
 		ArrayList<VeiculoPoiDTO> listaVeiculoPoiDTO = new ArrayList<>();
 		
 		List<PoiDTO> listaPoiDTO = poiService.listarPoi(filtro);
+		listaPoiDTO = listaPoiDTO.stream().sorted(Comparator.comparing(PoiDTO::getNome)).collect(Collectors.toList());
 		List<VeiculoDTO> listaVeiculoDTO = this.listarVeiculoDTO(filtro);
 		
 			
@@ -144,11 +145,12 @@ public class VeiculoServiceImpl implements VeiculoService {
 				}
 				listaTemposPOI.add(somaTempoLong);
 				somaTempoLong = listaTemposPOI.stream().reduce(0L, Long::sum);
-				veiculoPOI.put(poiDTO.getNome(), somaTempoLong.toString());
+				veiculoPOI.put(poiDTO.getNome(), FuncoesLib.secondsToTime(somaTempoLong));
 			}
+
 			VeiculoPoiDTO veiculoPoiDTO = new VeiculoPoiDTO(veiculoDTO.getPlaca(), veiculoPOI);
 			listaVeiculoPoiDTO.add(veiculoPoiDTO);
-			veiculoPOI = new HashMap<String, String>();
+			veiculoPOI = new LinkedHashMap<String, String>();
 		}
 		
 	
