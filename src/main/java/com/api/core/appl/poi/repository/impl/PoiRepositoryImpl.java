@@ -47,4 +47,11 @@ public class PoiRepositoryImpl implements PoiRepository{
 		return poiRepositoryData.findByRaio(filtro.getRaio(), pageable);
 	}
 
+
+	@Override
+	public Page<Poi> listarPoiPorNomeRaio(Filtro filtro) {
+		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
+		return poiRepositoryData.findByNomeAndRaio(filtro.getNome(), filtro.getRaio(), pageable);
+	}
+
 }

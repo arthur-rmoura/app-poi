@@ -24,10 +24,12 @@ public class PoiServiceImpl implements PoiService {
 		
 		Page<Poi> paginaPoi;
 		
-		if(filtro.getNome() != null) {
-			paginaPoi = poiRepository.listarPoiPorNome(filtro);
+		if(filtro.getNome() != null && filtro.getRaio() != null) {
+			paginaPoi = poiRepository.listarPoiPorNomeRaio(filtro);
 		}
-		
+		else if(filtro.getNome() != null) {
+			paginaPoi = poiRepository.listarPoiPorNome(filtro);
+		}	
 		else if(filtro.getRaio() != null) {
 			paginaPoi = poiRepository.listarPoiPorRaio(filtro);
 		}

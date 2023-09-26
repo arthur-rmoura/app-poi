@@ -16,5 +16,7 @@ public interface PoiRepositoryData extends PagingAndSortingRepository<Poi, Long>
 	Page<Poi> findByNome(String nome, Pageable pageable);
 
 	Page<Poi> findByRaio(BigDecimal raio, Pageable pageable);
+
+	Page<Poi> findByNomeAndRaio(String nome, BigDecimal raio, Pageable pageable);
 	
 }
