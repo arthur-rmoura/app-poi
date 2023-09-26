@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import com.api.core.appl.util.Filtro;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -50,11 +52,11 @@ public class VeiculoControllerImpl implements VeiculoController {
 	@ResponseBody
 	@Override
     public ResponseEntity<ArrayList<VeiculoDTO>> listarVeiculo(
-    		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0") @Parameter(name = "numeroPagina", description = "Número da página", example = "1") Integer numeroPagina,
-    		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "10") Integer tamanhoPagina,
-    		@RequestParam(name = "placa", required = false) @Parameter(name = "placa", description = "Placa do Veículo", example = "TESTE001") String placa, 
-    		@RequestParam(name = "marca", required = false) @Parameter(name = "marca", description = "Marca do Veículo", example = "Fiat") String marca,
-    		@RequestParam(name = "modelo", required = false) @Parameter(name = "modelo", description = "Modelo do Veículo", example = "Uno") String modelo
+    		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0") @Parameter(name = "numeroPagina", description = "Número da página", example = "1", in = ParameterIn.QUERY) Integer numeroPagina,
+    		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "10", in = ParameterIn.QUERY) Integer tamanhoPagina,
+    		@RequestParam(name = "placa", required = false) @Parameter(name = "placa", description = "Placa do Veículo", example = "TESTE001", in = ParameterIn.QUERY) String placa, 
+    		@RequestParam(name = "marca", required = false) @Parameter(name = "marca", description = "Marca do Veículo", example = "Fiat", in = ParameterIn.QUERY) String marca,
+    		@RequestParam(name = "modelo", required = false) @Parameter(name = "modelo", description = "Modelo do Veículo", example = "Uno", in = ParameterIn.QUERY) String modelo
     ) {
 		Filtro filtro = new Filtro();
 		filtro.setNumeroPagina(numeroPagina);
@@ -98,8 +100,8 @@ public class VeiculoControllerImpl implements VeiculoController {
 	
 	
 	@Operation(	
-			summary = "Recupera Tempo de Veiculos em POIs", 
-			description = "Recupera o tempo de todos veículos em POIs filtrados por POI e data"
+			summary = "Recupera Tempo de Todos os Veiculos em POIs", 
+			description = "Recupera o tempo de todos veículos em POIs podendo filtrar por POI e data"
 		)
 		@ApiResponses(value = {
 		        @ApiResponse(responseCode = "200", description = "Dados recuperados com sucesso.", content = {@Content(
@@ -111,13 +113,45 @@ public class VeiculoControllerImpl implements VeiculoController {
 		@GetMapping("/veiculos/relatorio-pois")
 		@ResponseBody
 		@Override
-	    public ResponseEntity<ArrayList<VeiculoPoiDTO>> listarTempoVeiculoPOI(
-	    		@RequestParam(name = "nomePoi", required = false) @Parameter(name = "nomePoi", description = "Nome do POI desejado", example = "PONTO 1") String nomePoi, 
-	    		@RequestParam(name = "data", required = false) @Parameter(name = "data", description = "Data para a pesquisa", example = "Mon Dec 31 2018 00:06:03 GMT-0200 (Hora oficial do Brasil)") String data
+	    public ResponseEntity<ArrayList<VeiculoPoiDTO>> listarTempoVeiculosPOI(
+	    		@RequestParam(name = "nomePoi", required = false) @Parameter(name = "nomePoi", description = "Nome do POI desejado", example = "PONTO 1", in = ParameterIn.QUERY) String nomePoi, 
+	    		@RequestParam(name = "data", required = false) @Parameter(name = "data", description = "Data para a pesquisa", example = "Mon Dec 31 2018 00:06:03 GMT-0200 (Hora oficial do Brasil)", in = ParameterIn.QUERY) String data
 	    ) {
 			Filtro filtro = new Filtro();
 			filtro.setNome(nomePoi);
 			filtro.setData(data);
+			filtro.setNumeroPagina(0);
+			filtro.setTamanhoPagina(1000000);
+			
+			ArrayList<VeiculoPoiDTO> listaVeiculoPoiDTO = veiculoService.listarTempoVeiculoPOI(filtro);
+			
+	        return new ResponseEntity<ArrayList<VeiculoPoiDTO>>(listaVeiculoPoiDTO, HttpStatus.OK);
+	    }
+	
+	
+	@Operation(	
+			summary = "Recupera Tempo de um veículo em específico em POIs", 
+			description = "Recupera o tempo do veículo passado como parâmetro em POIs podendo filtrar por POI e data"
+		)
+		@ApiResponses(value = {
+		        @ApiResponse(responseCode = "200", description = "Dados recuperados com sucesso.", content = {@Content(
+	                    mediaType = "application/json",
+	                    array = @ArraySchema(schema = @Schema(implementation = VeiculoPoiDTO.class)))}), 
+		        @ApiResponse(responseCode = "404", description = "Não Encontrado - Não foram encontrados dados com os parâmetros de entrada fornecidos.", content = @Content),
+		        @ApiResponse(responseCode = "500", description = "Erro Interno do Servidor", content = @Content)
+		})
+		@GetMapping("/veiculos/{placa}/relatorio-pois")
+		@ResponseBody
+		@Override
+	    public ResponseEntity<ArrayList<VeiculoPoiDTO>> listarTempoVeiculoPOI(
+	    		@RequestParam(name = "nomePoi", required = false) @Parameter(name = "nomePoi", description = "Nome do POI desejado", example = "PONTO 1", in = ParameterIn.QUERY) String nomePoi, 
+	    		@RequestParam(name = "data", required = false) @Parameter(name = "data", description = "Data para a pesquisa", example = "Mon Dec 31 2018 00:06:03 GMT-0200 (Hora oficial do Brasil)", in = ParameterIn.QUERY) String data,
+	    		@PathVariable(name = "placa", required = true) @Parameter(name = "placa", description = "Placa do veículo para a pesquisa", example = "TESTE001", in = ParameterIn.PATH, required = true) String placa
+	    ) {
+			Filtro filtro = new Filtro();
+			filtro.setNome(nomePoi);
+			filtro.setData(data);
+			filtro.setPlaca(placa);
 			filtro.setNumeroPagina(0);
 			filtro.setTamanhoPagina(1000000);
 			

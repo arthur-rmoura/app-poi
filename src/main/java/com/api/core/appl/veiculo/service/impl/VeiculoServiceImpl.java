@@ -131,14 +131,23 @@ public class VeiculoServiceImpl implements VeiculoService {
 				Long ultimoDadoPosicao = Long.MAX_VALUE;
 				Long diferenca = 0L;
 				ArrayList<Long> listaTemposPOI = new ArrayList<Long>();
+				Boolean inicioLista = true;
 				for(Long epochsecond : listaEpochSecond) {
 					if(epochsecond - ultimoDadoPosicao > limiteTempo) {
 						listaTemposPOI.add(somaTempoLong);
 						somaTempoLong = 0L;
-						ultimoDadoPosicao = Long.MAX_VALUE;
+						ultimoDadoPosicao = epochsecond;
+						diferenca = 0L;
 					}
 					else {
-						diferenca = ultimoDadoPosicao == Long.MAX_VALUE ? 0 : epochsecond - ultimoDadoPosicao;
+						if(inicioLista) {
+							diferenca = 0L;
+							inicioLista = false;
+						}
+						else {
+							diferenca = epochsecond - ultimoDadoPosicao;
+						}
+						
 						somaTempoLong = somaTempoLong + diferenca;
 						ultimoDadoPosicao = epochsecond;
 					}

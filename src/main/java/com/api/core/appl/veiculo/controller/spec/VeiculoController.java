@@ -14,6 +14,8 @@ public interface VeiculoController  {
 
 	ResponseEntity<VeiculoDTO> inserirVeiculo(VeiculoDTO veiculoDTO);
 
-	ResponseEntity<ArrayList<VeiculoPoiDTO>> listarTempoVeiculoPOI(String placa, String data);
+	ResponseEntity<ArrayList<VeiculoPoiDTO>> listarTempoVeiculosPOI(String nomePoi, String data);
+	
+	ResponseEntity<ArrayList<VeiculoPoiDTO>> listarTempoVeiculoPOI(String nomePoi, String data, String placa);
 
 }

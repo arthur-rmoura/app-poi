@@ -20,6 +20,7 @@ import com.api.core.appl.util.Filtro;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -49,10 +50,10 @@ public class DadosPosicaoControllerImpl implements DadosPosicaoController {
 	@ResponseBody
 	@Override
     public ResponseEntity<ArrayList<DadosPosicaoDTO>> listarDadosPosicionamento(
-    		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0") @Parameter(name = "numeroPagina", description = "Número da página", example = "1") Integer numeroPagina,
-    		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "10") Integer tamanhoPagina,
-    		@RequestParam(name = "placa", required = false) @Parameter(name = "placa", description = "Placa do veículo", example = "TST0101") String placa, 
-    		@RequestParam(name = "data", required = false) @Parameter(name = "data", description = "Data do dados de posição posição", example = "Mon Dec 31 2018 00:06:03 GMT-0200 (Hora oficial do Brasil)") String data
+    		@RequestParam(name = "numeroPagina", required = false, defaultValue = "0") @Parameter(name = "numeroPagina", description = "Número da página", example = "1", in = ParameterIn.QUERY) Integer numeroPagina,
+    		@RequestParam(name = "tamanhoPagina", required = false, defaultValue = "10") @Parameter(name = "tamanhoPagina", description = "Tamanho da página", example = "10", in = ParameterIn.QUERY) Integer tamanhoPagina,
+    		@RequestParam(name = "placa", required = false) @Parameter(name = "placa", description = "Placa do veículo", example = "TST0101", in = ParameterIn.QUERY) String placa, 
+    		@RequestParam(name = "data", required = false) @Parameter(name = "data", description = "Data do dados de posição posição", example = "Mon Dec 31 2018 00:06:03 GMT-0200 (Hora oficial do Brasil)", in = ParameterIn.QUERY) String data
     ) {
 		Filtro filtro = new Filtro();
 		filtro.setNumeroPagina(numeroPagina);
