@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class FuncoesLib {
 	
-	private static final double EARTH_RADIUS = 6371;
+	private static final double EARTH_RADIUS = 6371; //6373 -> Valor para aumentar a precisão;
 	
 	public static double calculateEquirectangularDistance(double lat1, double lon1, double lat2, double lon2) {
 	    double lat1Rad = Math.toRadians(lat1);
@@ -29,9 +29,7 @@ public class FuncoesLib {
 		double centroLong = longitude.doubleValue();
 		
 		double distancia=0.0d;
-		//double variacao=0.00005d; //original
-		//double variacao=0.0000005d; //44 segundos
-		double variacao=0.000005d; // 5 segundos
+		double variacao=0.000005d; //Para aumentar a precisão basta dividir por 10
 		
 		distancia=0.0d;
 		while(distancia < raio.doubleValue()) {

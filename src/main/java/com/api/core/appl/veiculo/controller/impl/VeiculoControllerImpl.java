@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.core.appl.veiculo.VeiculoDTO;
-import com.api.core.appl.veiculo.VeiculoPoiDTO;
+import com.api.core.appl.veiculo.PoiVeiculoDTO;
 import com.api.core.appl.veiculo.service.spec.VeiculoService;
 import com.api.core.appl.veiculo.controller.spec.VeiculoController;
 import com.api.core.appl.util.Filtro;
@@ -104,14 +104,14 @@ public class VeiculoControllerImpl implements VeiculoController {
 		@ApiResponses(value = {
 		        @ApiResponse(responseCode = "200", description = "Dados recuperados com sucesso.", content = {@Content(
 	                    mediaType = "application/json",
-	                    array = @ArraySchema(schema = @Schema(implementation = VeiculoPoiDTO.class)))}), 
+	                    array = @ArraySchema(schema = @Schema(implementation = PoiVeiculoDTO.class)))}), 
 		        @ApiResponse(responseCode = "404", description = "Não Encontrado - Não foram encontrados dados com os parâmetros de entrada fornecidos.", content = @Content),
 		        @ApiResponse(responseCode = "500", description = "Erro Interno do Servidor", content = @Content)
 		})
 		@GetMapping("/veiculos/relatorio-pois")
 		@ResponseBody
 		@Override
-	    public ResponseEntity<ArrayList<VeiculoPoiDTO>> listarTempoVeiculoPOI(
+	    public ResponseEntity<ArrayList<PoiVeiculoDTO>> listarTempoVeiculoPOI(
 	    		@RequestParam(name = "nomePoi", required = false) @Parameter(name = "nomePoi", description = "Nome do POI desejado", example = "PONTO 1") String nomePoi, 
 	    		@RequestParam(name = "data", required = false) @Parameter(name = "data", description = "Data para a pesquisa", example = "Mon Dec 31 2018 00:06:03 GMT-0200 (Hora oficial do Brasil)") String data
 	    ) {
@@ -121,9 +121,9 @@ public class VeiculoControllerImpl implements VeiculoController {
 			filtro.setNumeroPagina(0);
 			filtro.setTamanhoPagina(1000000);
 			
-			ArrayList<VeiculoPoiDTO> listaVeiculoPoiDTO = veiculoService.listarTempoVeiculoPOI(filtro);
+			ArrayList<PoiVeiculoDTO> listaVeiculoPoiDTO = veiculoService.listarTempoVeiculoPOI(filtro);
 			
-	        return new ResponseEntity<ArrayList<VeiculoPoiDTO>>(listaVeiculoPoiDTO, HttpStatus.OK);
+	        return new ResponseEntity<ArrayList<PoiVeiculoDTO>>(listaVeiculoPoiDTO, HttpStatus.OK);
 	    }
 }
 

@@ -66,8 +66,35 @@ public class DadosPosicaoRepositoryImpl implements DadosPosicaoRepository{
 	@Override
 	public Page<DadosPosicao> listarDadosPosicaoVeiculoIntervalo(double[] intervalo, Filtro filtro) {
 		Pageable pageable = PageRequest.of(filtro.getNumeroPagina(), filtro.getTamanhoPagina());
-		//colocar a data depois 
-		return dadosPosicaoRepositoryData.findByCustomQuery(filtro.getPlaca(), new BigDecimal(intervalo[0]), new BigDecimal(intervalo[1]), new BigDecimal(intervalo[2]), new BigDecimal(intervalo[3]), pageable);
+		
+		if(filtro.getDataInicial() != null && filtro.getDataFinal() != null) {
+			DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+				    .parseCaseInsensitive()
+				    .appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)")
+				    .toFormatter(Locale.ENGLISH);
+			ZonedDateTime zonedDateTimeInicial = ZonedDateTime.parse(filtro.getDataInicial().replace("(Hora oficial do Brasil)", "(Brasilia Time)"), formatter);
+			long timestampPosicaoInicial = zonedDateTimeInicial.toEpochSecond();
+			String timezonePosicaoInicial = zonedDateTimeInicial.getZone().getId();
+			
+			ZonedDateTime zonedDateTimeFinal = ZonedDateTime.parse(filtro.getDataInicial().replace("(Hora oficial do Brasil)", "(Brasilia Time)"), formatter);
+			long timestampPosicaoFinal = zonedDateTimeFinal.toEpochSecond();
+			String timezonePosicaoFinal = zonedDateTimeFinal.getZone().getId();
+		}
+		else if(filtro.getData() != null) {
+			DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+				    .parseCaseInsensitive()
+				    .appendPattern("EEE MMM dd uuuu HH:mm:ss zXX (zzzz)")
+				    .toFormatter(Locale.ENGLISH);
+			ZonedDateTime zonedDateTime = ZonedDateTime.parse(filtro.getData().replace("(Hora oficial do Brasil)", "(Brasilia Time)"), formatter);
+			long timestampPosicao = zonedDateTime.toEpochSecond();
+			String timezonePosicao = zonedDateTime.getZone().getId();
+		}
+		else {
+			return dadosPosicaoRepositoryData.findByCustomQuery(filtro.getPlaca(), new BigDecimal(intervalo[0]), new BigDecimal(intervalo[1]), new BigDecimal(intervalo[2]), new BigDecimal(intervalo[3]), pageable);
+		}
+		
+		return null;
+		
 	}
 
 }

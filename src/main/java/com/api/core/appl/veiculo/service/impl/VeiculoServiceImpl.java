@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.api.core.appl.veiculo.PoiVeiculoDTO;
 import com.api.core.appl.veiculo.Veiculo;
 import com.api.core.appl.veiculo.VeiculoDTO;
-import com.api.core.appl.veiculo.VeiculoPoiDTO;
 import com.api.core.appl.veiculo.repository.spec.VeiculoRepository;
 import com.api.core.appl.veiculo.service.spec.VeiculoService;
 import com.api.core.appl.dadosposicao.DadosPosicao;
@@ -107,9 +107,9 @@ public class VeiculoServiceImpl implements VeiculoService {
 	}
 
 	@Override
-	public ArrayList<VeiculoPoiDTO> listarTempoVeiculoPOI(Filtro filtro) {
-		HashMap<String, String> tempoPOI = new HashMap<String, String>();
-		ArrayList<VeiculoPoiDTO> listaVeiculoPoiDTO = new ArrayList<>();
+	public ArrayList<PoiVeiculoDTO> listarTempoVeiculoPOI(Filtro filtro) {
+		HashMap<String, String> veiculoPOI = new HashMap<String, String>();
+		ArrayList<PoiVeiculoDTO> listaVeiculoPoiDTO = new ArrayList<>();
 		
 		List<PoiDTO> listaPoiDTO = poiService.listarPoi(filtro);
 		List<VeiculoDTO> listaVeiculoDTO = this.listarVeiculoDTO(filtro);
@@ -122,13 +122,13 @@ public class VeiculoServiceImpl implements VeiculoService {
 				filtro.setPlaca(veiculoDTO.getPlaca());
 
 				List<DadosPosicao> listaDadosPosicao = this.listarDadosPosicaoVeiculoIntervalo(intervalos, filtro);
-//				listaDadosPosicao = listaDadosPosicao.stream().sorted(Comparator.comparing(DadosPosicao::getEpochSecondPosicao)).collect(Collectors.toList());
 				List<Long> listaEpochSecond = listaDadosPosicao.stream().map(e->e.getEpochSecondPosicao()).collect(Collectors.toList());
 				listaEpochSecond.sort(Comparator.comparingLong(Long::longValue));
 				
-				Long limiteTempo = 500L;
+				Long limiteTempo = 1800L; //5horas
 				Long somaTempoLong = 0L; 
 				Long ultimoDadoPosicao = Long.MAX_VALUE;
+				Long diferenca = 0L;
 				ArrayList<Long> listaTemposPOI = new ArrayList<Long>();
 				for(Long epochsecond : listaEpochSecond) {
 					if(epochsecond - ultimoDadoPosicao > limiteTempo) {
@@ -137,24 +137,28 @@ public class VeiculoServiceImpl implements VeiculoService {
 						ultimoDadoPosicao = Long.MAX_VALUE;
 					}
 					else {
-						somaTempoLong = somaTempoLong + epochsecond;
+						diferenca = ultimoDadoPosicao == Long.MAX_VALUE ? 0 : epochsecond - ultimoDadoPosicao;
+						somaTempoLong = somaTempoLong + diferenca;
 						ultimoDadoPosicao = epochsecond;
 					}
 				}
+				listaTemposPOI.add(somaTempoLong);
 				somaTempoLong = listaTemposPOI.stream().reduce(0L, Long::sum);
-				System.out.println();
-				System.out.println("POI: " +  poiDTO.getNome() + " Tamanho da Lista: " + listaTemposPOI.size());
-				System.out.println("Soma Total:" +  somaTempoLong);
-				System.out.println();
+				if(somaTempoLong > 0 && (poiDTO.getNome().equals("PONTO 2") || poiDTO.getNome().equals("PONTO 3"))) {
+					System.out.println();
+					System.out.println("POI: " +  poiDTO.getNome() + " Tamanho da Lista: " + listaTemposPOI.size());
+					System.out.println("Veículo: " +  veiculoDTO.getPlaca());
+					System.out.println("Soma Total:" +  somaTempoLong);
+					System.out.println();
+				}
+				veiculoPOI.put(veiculoDTO.getPlaca(), somaTempoLong.toString());
 			}
+			PoiVeiculoDTO poiVeiculoDTO = new PoiVeiculoDTO(poiDTO.getNome(), veiculoPOI);
+			listaVeiculoPoiDTO.add(poiVeiculoDTO);
+			veiculoPOI = new HashMap<String, String>();
 		}
 		
-		/*Mock*/
-		String veiculo = "TESTE001";
-		tempoPOI.put("PONTO 1", "3 dias 5 horas 2 minutos 5 segundos");
-		tempoPOI.put("PONTO 2", "3 horas 20 minutos 30 segundos");
-		VeiculoPoiDTO veiculoPoiDTO = new VeiculoPoiDTO(veiculo, tempoPOI);
-		listaVeiculoPoiDTO.add(veiculoPoiDTO);
+	
 
 		return listaVeiculoPoiDTO;
 
