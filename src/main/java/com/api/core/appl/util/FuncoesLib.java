@@ -19,6 +19,14 @@ public class FuncoesLib {
 	    return distance;
 	}
 
+	public static double calcularDistancia(double[] latlong) {
+		return calculateEquirectangularDistance(latlong[0],latlong[1],latlong[2],latlong[3]);
+	}
+	
+	public static double calcularDistancia(BigDecimal latitude, BigDecimal longitude, BigDecimal latitudeCentro, BigDecimal longitudeCentro) {
+		return calculateEquirectangularDistance(latitude.doubleValue(),longitude.doubleValue(),latitudeCentro.doubleValue(),longitudeCentro.doubleValue());
+	}
+			
 	public static double[] calcularIntervalos(BigDecimal latitude, BigDecimal longitude, BigDecimal raio) {
 		double minLat=latitude.doubleValue();;
 		double maxLat=latitude.doubleValue();;
