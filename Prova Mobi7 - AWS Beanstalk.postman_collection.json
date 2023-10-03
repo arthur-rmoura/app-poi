@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "a3f632c3-655a-4253-9575-99fa6fdc0de8",
+		"name": "Prova Mobi7 - AWS Beanstalk",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5319741"
+	},
+	"item": [
+		{
+			"name": "Insere de Dados de Posicionamento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"placa\": \"GTX5555\",\r\n    \"dataPosicao\": \"Fri Dec 28 2018 21:36:03 GMT-0200 (Hora oficial do Brasil)\",\r\n    \"velocidade\": 50.5,\r\n    \"latitude\": -30.56742701740900,\r\n    \"longitude\": -40.47653363645080,\r\n    \"ignicao\": false\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/dados-posicao",
+					"protocol": "http",
+					"host": [
+						"appl-poi",
+						"sa-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"appl",
+						"dados-posicao"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insere POIs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"nome\": \"PONTO TESTE\",\r\n    \"raio\": 500.0,\r\n    \"latitude\": -30.56742701740896,\r\n    \"longitude\": -40.47653363645077\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/pois",
+					"protocol": "http",
+					"host": [
+						"appl-poi",
+						"sa-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"appl",
+						"pois"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insere Veículos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"placa\": \"GTX5555\",\r\n    \"marca\": \"Chevrolet\",\r\n    \"modelo\": \"Camaro\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/veiculos/",
+					"protocol": "http",
+					"host": [
+						"appl-poi",
+						"sa-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"appl",
+						"veiculos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista Dados de Posicionamento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/dados-posicao?placa=TESTE001&tamanhoPagina=100",
+					"protocol": "http",
+					"host": [
+						"appl-poi",
+						"sa-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"appl",
+						"dados-posicao"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "2018-12-12",
+							"disabled": true
+						},
+						{
+							"key": "placa",
+							"value": "TESTE001"
+						},
+						{
+							"key": "pagina",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "tamanhoPagina",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista POIs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/pois?raio=300.0&nome=PONTO 1",
+					"protocol": "http",
+					"host": [
+						"appl-poi",
+						"sa-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"appl",
+						"pois"
+					],
+					"query": [
+						{
+							"key": "raio",
+							"value": "300.0"
+						},
+						{
+							"key": "nome",
+							"value": "PONTO 1"
+						},
+						{
+							"key": "pagina",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "tamanhoPagina",
+							"value": "100",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista Veiculos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/veiculos",
+					"protocol": "http",
+					"host": [
+						"appl-poi",
+						"sa-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"appl",
+						"veiculos"
+					],
+					"query": [
+						{
+							"key": "placa",
+							"value": "TESTE001",
+							"disabled": true
+						},
+						{
+							"key": "marca",
+							"value": "fiat",
+							"disabled": true
+						},
+						{
+							"key": "modelo",
+							"value": "argo",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista Tempo POIs Todos os Veículos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/veiculos/relatorio-pois",
+					"protocol": "http",
+					"host": [
+						"appl-poi",
+						"sa-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"appl",
+						"veiculos",
+						"relatorio-pois"
+					],
+					"query": [
+						{
+							"key": "nomePoi",
+							"value": "PONTO TESTE",
+							"disabled": true
+						},
+						{
+							"key": "data",
+							"value": "2018-12-25",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista Tempo POIs por Placa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/veiculos/TESTE001/relatorio-pois",
+					"protocol": "http",
+					"host": [
+						"appl-poi",
+						"sa-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"appl",
+						"veiculos",
+						"TESTE001",
+						"relatorio-pois"
+					],
+					"query": [
+						{
+							"key": "nomePoi",
+							"value": "PONTO 1",
+							"disabled": true
+						},
+						{
+							"key": "data",
+							"value": "2018-12-25",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
