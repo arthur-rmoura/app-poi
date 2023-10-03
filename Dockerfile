@@ -1,11 +1,18 @@
-FROM openjdk:8
+FROM centos
 
-# Adding files
-RUN mkdir /opt/appl-poi/
-COPY ./artefatos/appl-0.0.4.jar /
-COPY ./application.properties /opt/appl-poi/
-COPY ./application-dev.properties /opt/appl-poi/
+MAINTAINER arthur.rmoura@gmail.com
+
+RUN mkdir /opt/tomcat/
+
+WORKDIR /opt/tomcat
+RUN curl -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz
+RUN tar xvfz apache*.tar.gz
+RUN mv apache-tomcat-9.0.80/* /opt/tomcat/.
+RUN yum -y install java
+RUN java -version
+
+WORKDIR /opt/tomcat/webapps
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "appl-0.0.4.jar"]
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
