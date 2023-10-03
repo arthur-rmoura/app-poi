@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "\r\n{\r\n    \"placa\": \"GTX5555\",\r\n    \"dataPosicao\": \"Fri Dec 28 2018 21:36:03 GMT-0200 (Hora oficial do Brasil)\",\r\n    \"velocidade\": 50.5,\r\n    \"latitude\": -30.56742701740900,\r\n    \"longitude\": -40.47653363645080,\r\n    \"ignicao\": false\r\n}\r\n\r\n",
+					"raw": "\r\n{\r\n    \"placa\": \"GTX5555\",\r\n    \"dataPosicao\": \"Fri Dec 28 2018 23:36:03 GMT-0200 (Hora oficial do Brasil)\",\r\n    \"velocidade\": 50.5,\r\n    \"latitude\": -30.56742701740900,\r\n    \"longitude\": -40.47653363645080,\r\n    \"ignicao\": false\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/dados-posicao",
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com/appl/dados-posicao",
 					"protocol": "http",
 					"host": [
 						"appl-poi",
@@ -29,7 +29,6 @@
 						"elasticbeanstalk",
 						"com"
 					],
-					"port": "8080",
 					"path": [
 						"appl",
 						"dados-posicao"
@@ -53,7 +52,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/pois",
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com/appl/pois",
 					"protocol": "http",
 					"host": [
 						"appl-poi",
@@ -61,7 +60,6 @@
 						"elasticbeanstalk",
 						"com"
 					],
-					"port": "8080",
 					"path": [
 						"appl",
 						"pois"
@@ -85,7 +83,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/veiculos/",
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com/appl/veiculos/",
 					"protocol": "http",
 					"host": [
 						"appl-poi",
@@ -93,7 +91,6 @@
 						"elasticbeanstalk",
 						"com"
 					],
-					"port": "8080",
 					"path": [
 						"appl",
 						"veiculos",
@@ -109,7 +106,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/dados-posicao?placa=TESTE001&tamanhoPagina=100",
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com/appl/dados-posicao?placa=TESTE001&tamanhoPagina=100",
 					"protocol": "http",
 					"host": [
 						"appl-poi",
@@ -117,7 +114,6 @@
 						"elasticbeanstalk",
 						"com"
 					],
-					"port": "8080",
 					"path": [
 						"appl",
 						"dados-posicao"
@@ -152,7 +148,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/pois?raio=300.0&nome=PONTO 1",
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com/appl/pois?raio=300.0&nome=PONTO 1",
 					"protocol": "http",
 					"host": [
 						"appl-poi",
@@ -160,7 +156,6 @@
 						"elasticbeanstalk",
 						"com"
 					],
-					"port": "8080",
 					"path": [
 						"appl",
 						"pois"
@@ -195,7 +190,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/veiculos",
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com/appl/veiculos",
 					"protocol": "http",
 					"host": [
 						"appl-poi",
@@ -203,7 +198,6 @@
 						"elasticbeanstalk",
 						"com"
 					],
-					"port": "8080",
 					"path": [
 						"appl",
 						"veiculos"
@@ -235,7 +229,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/veiculos/relatorio-pois",
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com/appl/veiculos/relatorio-pois",
 					"protocol": "http",
 					"host": [
 						"appl-poi",
@@ -243,7 +237,6 @@
 						"elasticbeanstalk",
 						"com"
 					],
-					"port": "8080",
 					"path": [
 						"appl",
 						"veiculos",
@@ -271,7 +264,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com:8080/appl/veiculos/TESTE001/relatorio-pois",
+					"raw": "http://appl-poi.sa-east-1.elasticbeanstalk.com/appl/veiculos/TESTE001/relatorio-pois",
 					"protocol": "http",
 					"host": [
 						"appl-poi",
@@ -279,7 +272,6 @@
 						"elasticbeanstalk",
 						"com"
 					],
-					"port": "8080",
 					"path": [
 						"appl",
 						"veiculos",
