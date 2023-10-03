@@ -123,6 +123,9 @@ public class VeiculoServiceImpl implements VeiculoService {
 				
 				double[] intervalos = FuncoesLib.calcularIntervalos(poiDTO.getLatitude(), poiDTO.getLongitude(), poiDTO.getRaio().divide(new BigDecimal("1000.0")));
 				List<DadosPosicao> listaDadosPosicao = this.listarDadosPosicaoVeiculoIntervalo(intervalos, filtro);
+				
+				double raioMetros = poiDTO.getRaio().divide(new BigDecimal("1000.0")).doubleValue();
+				listaDadosPosicao = listaDadosPosicao.stream().filter(e-> FuncoesLib.calcularDistancia(e.getLatitude(), e.getLongitude(), poiDTO.getLatitude(), poiDTO.getLongitude()) <= raioMetros).collect(Collectors.toList());
 				List<Long> listaEpochSecond = listaDadosPosicao.stream().map(e->e.getEpochSecondPosicao()).collect(Collectors.toList());
 				listaEpochSecond.sort(Comparator.comparingLong(Long::longValue));
 				
